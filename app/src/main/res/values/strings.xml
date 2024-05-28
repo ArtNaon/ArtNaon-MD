@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ArtNaon</string>
+    <string name="image_desc">Ini adalah gambar</string>
+    <string name="welcome_to_artnaon">Welcome to ArtNaon</string>
+    <string name="i_m_new_here">I\'m New Here</string>
+    <string name="sign_in">Sign In</string>
 </resources>
