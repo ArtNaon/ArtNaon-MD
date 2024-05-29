@@ -1,4 +1,4 @@
-package com.example.artnaon.view.ui.signup
+package com.example.artnaon.ui.view.signup
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
