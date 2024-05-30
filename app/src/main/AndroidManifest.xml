@@ -13,10 +13,16 @@
         android:theme="@style/Theme.ArtNaon"
         tools:targetApi="31">
         <activity
+            android:name=".view.ui.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.ui.signup.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".view.ui.welcome.WelcomeActivity"
+            android:name=".ui.view.onboarding.OnboardingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +32,8 @@
         </activity>
         <activity
             android:name=".view.ui.main.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
+
 
 </manifest>

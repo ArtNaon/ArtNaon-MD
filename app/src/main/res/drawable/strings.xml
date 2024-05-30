@@ -1,16 +1,12 @@
 <resources>
-    <string name="app_name">ArtNaon</string>
-    <string name="image_desc">Ini adalah gambar</string>
-    <string name="welcome_to_artnaon">Welcome to ArtNaon</string>
-    <string name="i_m_new_here">I\'m New Here</string>
-    <string name="sign_in">Sign In</string>
+    <string name="app_name">OnBoardingPage</string>
     <string name="title_menu_1">Classify Your Arts</string>
     <string name="title_menu_2">Upload and Discover Arts</string>
     <string name="title_menu_3">Find Similar Genres</string>
-    <string name="title_menu_4">Find Your Art with Art Naon</string>
+    <string name="title_menu_4">Lets Create Account</string>
     <string name="desc_menu_1">Take a photo of an art and let ArtNaon recognize and classify its genre. Get detailed explanations about each identified genre.</string>
     <string name="desc_menu_2">Upload your own artworks and explore a wide variety of arts from others. Find new inspiration every day.</string>
     <string name="desc_menu_3">Find art genres similar to those you photograph or upload. Dive deeper into the world of art with recommendations of related genres to enrich your knowledge.</string>
-    <string name="desc_menu_4">Start your creative adventure with the Art Naon app. Create unique artworks and express yourself without limits..</string>
-    <string name="start_now">Get Started</string>
+    <string name="desc_menu_4">Sertifikat yang membuktikan pengetahuan fundamental beserta keterampilan nyata yang diinginkan perusahaan global.</string>
+    <string name="learn_now">Belajar Sekarang</string>
 </resources>
