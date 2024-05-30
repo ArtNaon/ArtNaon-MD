@@ -20,6 +20,12 @@
             android:exported="false" />
         <activity
             android:name=".ui.view.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.onboarding.OnboardingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.view.splash.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,5 +37,6 @@
             android:name=".ui.view.main.MainActivity"
             android:exported="true" />
     </application>
+
 
 </manifest>
