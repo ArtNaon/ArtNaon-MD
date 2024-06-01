@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,17 +15,26 @@
         android:theme="@style/Theme.ArtNaon"
         tools:targetApi="31">
         <activity
-            android:name=".ui.view.welcome.WelcomeActivity"
+            android:name=".ui.view.detail.DetailActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.view.signin.SignInActivity"
+            android:exported="true"></activity>
+        <activity
             android:name=".ui.view.signup.SignUpActivity"
+            android:exported="false" />
+        <activity
+
+            android:name=".ui.view.welcome.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.onboarding.OnboardingActivity"
             android:exported="true" />
         <activity
             android:name=".ui.view.splash.SplashActivity"
-            android:exported="true">
+            android:exported="true"></activity>
+        <activity
+            android:name=".ui.view.main.MainActivity"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +45,5 @@
             android:name=".ui.view.main.MainActivity"
             android:exported="true" />
     </application>
-
 
 </manifest>

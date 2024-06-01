@@ -3,4 +3,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#8294C4</color>
+    <color name="colorHint">#8D92A3</color>
+    <color name="colorGenre">#CED2E6</color>
+    <color name="colorTextGenre">#1E1E1E</color>
+    <color name="colorButtonMini">#959ABA</color>
+    <color name="colorSearchBackground">#EFEFEF</color>
 </resources>

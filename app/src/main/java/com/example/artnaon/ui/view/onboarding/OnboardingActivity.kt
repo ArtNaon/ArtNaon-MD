@@ -8,7 +8,10 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.artnaon.databinding.ActivityOnboardingBinding
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
+<<<<<<< HEAD
 
+=======
+>>>>>>> 68e456a47040bc6240dfc7ff92752d8ed78e1243
 
 
 class OnboardingActivity : AppCompatActivity() {
@@ -20,6 +23,7 @@ class OnboardingActivity : AppCompatActivity() {
         binding = ActivityOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.hide()
         setupView()
         setupListeners()
     }
