@@ -7,7 +7,8 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.artnaon.databinding.ActivityOnboardingBinding
-import com.example.artnaon.view.ui.welcome.WelcomeActivity
+import com.example.artnaon.ui.view.welcome.WelcomeActivity
+
 
 
 class OnboardingActivity : AppCompatActivity() {
