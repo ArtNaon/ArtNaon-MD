@@ -28,10 +28,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var artAdapter: ArtAdapter
     private val images = listOf(
         R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art
+        R.drawable.ic_launcher_background,
+        R.drawable.onboarding_1,
+        R.drawable.onboarding_2,
+        R.drawable.onboarding_3
     )
 
     private val genres = listOf(

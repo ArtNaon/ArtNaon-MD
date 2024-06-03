@@ -15,26 +15,32 @@
         android:theme="@style/Theme.ArtNaon"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.profile.mypost.MyPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.profile.editprofile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.camera.CameraActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.welcome.WelcomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.signin.SignInActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.view.signup.SignUpActivity"
-            android:exported="false" />
-        <activity
-
-            android:name=".ui.view.welcome.WelcomeActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.onboarding.OnboardingActivity"
             android:exported="true" />
         <activity
             android:name=".ui.view.splash.SplashActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".ui.view.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

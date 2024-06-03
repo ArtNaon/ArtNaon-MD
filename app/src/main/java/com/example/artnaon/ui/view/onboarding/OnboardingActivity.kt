@@ -8,10 +8,6 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.artnaon.databinding.ActivityOnboardingBinding
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
-<<<<<<< HEAD
-
-=======
->>>>>>> 68e456a47040bc6240dfc7ff92752d8ed78e1243
 
 
 class OnboardingActivity : AppCompatActivity() {
@@ -53,6 +49,6 @@ class OnboardingActivity : AppCompatActivity() {
     private fun navigateToWelcomeActivity() {
         val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
-        finish()
+
     }
 }
