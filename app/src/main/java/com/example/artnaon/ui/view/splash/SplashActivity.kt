@@ -7,6 +7,7 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import com.example.artnaon.R
 import com.example.artnaon.ui.view.onboarding.OnboardingActivity
 
+
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

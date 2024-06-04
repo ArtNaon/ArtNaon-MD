@@ -49,6 +49,6 @@ class OnboardingActivity : AppCompatActivity() {
     private fun navigateToWelcomeActivity() {
         val intent = Intent(this, WelcomeActivity::class.java)
         startActivity(intent)
-        finish()
+
     }
 }
