@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">OnBoardingPage</string>
+    <string name="title_menu_1">Classify Your Arts</string>
+    <string name="title_menu_2">Upload and Discover Arts</string>
+    <string name="title_menu_3">Find Similar Genres</string>
+    <string name="title_menu_4">Lets Create Account</string>
+    <string name="desc_menu_1">Take a photo of an art and let ArtNaon recognize and classify its genre. Get detailed explanations about each identified genre.</string>
+    <string name="desc_menu_2">Upload your own artworks and explore a wide variety of arts from others. Find new inspiration every day.</string>
+    <string name="desc_menu_3">Find art genres similar to those you photograph or upload. Dive deeper into the world of art with recommendations of related genres to enrich your knowledge.</string>
+    <string name="desc_menu_4">Sertifikat yang membuktikan pengetahuan fundamental beserta keterampilan nyata yang diinginkan perusahaan global.</string>
+    <string name="learn_now">Belajar Sekarang</string>
+</resources>
