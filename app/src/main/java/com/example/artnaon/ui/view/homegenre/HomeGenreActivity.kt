@@ -1,20 +1,18 @@
-package com.example.artnaon.ui.view.detail
+package com.example.artnaon.ui.view.homegenre
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.artnaon.R
-import com.example.artnaon.databinding.ActivityDetailBinding
+import com.example.artnaon.databinding.ActivityHomeGenreBinding
 import com.example.artnaon.ui.view.main.ArtAdapter
-import com.example.artnaon.ui.view.main.GenreAdapter
 
-class DetailActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailAdapter: DetailAdapter
+class HomeGenreActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityHomeGenreBinding
+    private lateinit var homeGenreAdapter: ArtAdapter
 
     private val images = listOf(
         R.drawable.dummy_art,
@@ -23,11 +21,10 @@ class DetailActivity : AppCompatActivity() {
         R.drawable.dummy_art,
         R.drawable.dummy_art
     )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityHomeGenreBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -35,12 +32,12 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        binding.rvDetailSimilarGenre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvHomeGenre.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
 
-        detailAdapter = DetailAdapter(images)
-        binding.rvDetailSimilarGenre.adapter = detailAdapter
+        homeGenreAdapter = ArtAdapter(images)
+        binding.rvHomeGenre.adapter = homeGenreAdapter
 
-        binding.ivDetailBack.setOnClickListener {
+        binding.ivHomeGenreBack.setOnClickListener {
             onBackPressed()
         }
     }

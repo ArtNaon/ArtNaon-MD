@@ -35,7 +35,18 @@
     <string name="back">Back</string>
     <string name="download">Download</string>
     <string name="save">Save</string>
-    <string name="romantisme">Romantisme</string>
-    <string name="romantisisme">Romantisisme</string>
     <string name="romanticism">Romanticism</string>
+    <string name="desc">Description</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum commodo justo vitae luctus. Vestibulum et lacus sit amet turpis feugiat luctus id nec libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec ac interdum lacus, nec finibus sapien. Suspendisse porta neque augue, vel condimentum libero interdum vel. Nulla ultricies tempus massa. Mauris commodo eros ut tortor finibus, feugiat imperdiet nunc lacinia. Etiam justo augue, volutpat at est eu, tincidunt laoreet felis.</string>
+    <string name="similar_genre">Similar Genre</string>
+    <string name="create_post">Create Post</string>
+    <string name="edt_desc">Add a description to let everyone know what your Art is about.</string>
+
+    <string-array name="spinner_items">
+        <item>Select a Genre</item>
+        <item>Romanticism</item>
+        <item>Abstract</item>
+        <item>Fauvism</item>
+        <item>Pop Art</item>
+    </string-array>
 </resources>

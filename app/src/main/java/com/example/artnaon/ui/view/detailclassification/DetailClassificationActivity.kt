@@ -1,4 +1,4 @@
-package com.example.artnaon.ui.view.detail
+package com.example.artnaon.ui.view.detailclassification
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -7,14 +7,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
-import com.example.artnaon.databinding.ActivityDetailBinding
-import com.example.artnaon.ui.view.main.ArtAdapter
-import com.example.artnaon.ui.view.main.GenreAdapter
+import com.example.artnaon.databinding.ActivityDetailClassificationBinding
+import com.example.artnaon.ui.view.detail.DetailAdapter
 
-class DetailActivity : AppCompatActivity() {
+class DetailClassificationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
-    private lateinit var detailAdapter: DetailAdapter
+    private lateinit var binding: ActivityDetailClassificationBinding
+    private lateinit var detailClassAdapter: DetailAdapter
 
     private val images = listOf(
         R.drawable.dummy_art,
@@ -27,7 +26,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityDetailClassificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -35,12 +34,12 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        binding.rvDetailSimilarGenre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvDetailClassSimilarGenre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        detailAdapter = DetailAdapter(images)
-        binding.rvDetailSimilarGenre.adapter = detailAdapter
+        detailClassAdapter = DetailAdapter(images)
+        binding.rvDetailClassSimilarGenre.adapter = detailClassAdapter
 
-        binding.ivDetailBack.setOnClickListener {
+        binding.ivDetailClassBack.setOnClickListener {
             onBackPressed()
         }
     }

@@ -3,6 +3,7 @@ package com.example.artnaon.ui.view.main
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
 import com.example.artnaon.databinding.ActivityMainBinding
+import com.example.artnaon.ui.view.upload.UploadActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,11 +29,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var artAdapter: ArtAdapter
     private val images = listOf(
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art
+        R.drawable.dummy_art,
+        R.drawable.dummy_art,
+        R.drawable.dummy_art,
+        R.drawable.dummy_art,
+        R.drawable.dummy_art
     )
 
     private val genres = listOf(
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.ivActionBarUpload.setOnClickListener {
-
+            startActivity(Intent(this, UploadActivity::class.java))
         }
     }
 

@@ -15,11 +15,23 @@
         android:theme="@style/Theme.ArtNaon"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.save.SaveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.upload.UploadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.homegenre.HomeGenreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.detailclassification.DetailClassificationActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.detail.DetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.signin.SignInActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.view.signup.SignUpActivity"
             android:exported="false" />
