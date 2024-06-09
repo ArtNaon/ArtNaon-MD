@@ -18,6 +18,7 @@ import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.databinding.ActivitySignInBinding
 import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainActivity
+import com.example.artnaon.ui.view.reset.ResetPasswordActivity
 import com.example.artnaon.ui.view.signup.SignUpActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
@@ -65,6 +66,8 @@ class SignInActivity : AppCompatActivity() {
         binding.tvSignInPassword.translationY = 50f
         binding.edlSignInPassword.alpha = 0f
         binding.edlSignInPassword.translationY = 50f
+        binding.tvSignInResetPassword.alpha = 0f
+        binding.tvSignInResetPassword.translationY = 50f
         binding.btnSignIn.alpha = 0f
         binding.btnSignIn.translationY = 50f
         binding.layoutSignInSignUp.alpha = 0f
@@ -80,6 +83,7 @@ class SignInActivity : AppCompatActivity() {
         val edlPassword = createAnimator(binding.edlSignInPassword, duration)
         val signin = createAnimator(binding.btnSignIn, duration)
         val signup = createAnimator(binding.layoutSignInSignUp, duration)
+        val resetPassword = createAnimator(binding.tvSignInResetPassword, duration)
 
         AnimatorSet().apply {
             playSequentially(
@@ -87,6 +91,7 @@ class SignInActivity : AppCompatActivity() {
                 edlEmail,
                 password,
                 edlPassword,
+                resetPassword,
                 signin,
                 signup
             )
@@ -126,7 +131,8 @@ class SignInActivity : AppCompatActivity() {
                                     setTitle("Asik!")
                                     setMessage("Selamat datang di ArtNaon")
                                     setPositiveButton("Lanjut") { _, _ ->
-                                        intent = Intent(this@SignInActivity, MainActivity::class.java)
+                                        intent =
+                                            Intent(this@SignInActivity, MainActivity::class.java)
                                         startActivity(intent)
                                         finish()
                                     }
@@ -178,8 +184,11 @@ class SignInActivity : AppCompatActivity() {
         binding.tvSignInSignUp.setOnClickListener {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
         }
-    }
 
+        binding.tvSignInResetPassword.setOnClickListener {
+            startActivity(Intent(this@SignInActivity, ResetPasswordActivity::class.java))
+        }
+    }
 
 
     private fun showLoading(isLoading: Boolean) {

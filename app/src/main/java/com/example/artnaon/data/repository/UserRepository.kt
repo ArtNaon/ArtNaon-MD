@@ -7,6 +7,7 @@ import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.data.pref.UserPreference
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
+import com.example.artnaon.data.response.ResetPasswordResponse
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONException
 import org.json.JSONObject
@@ -47,6 +48,26 @@ class UserRepository (
                 }
             } catch (jsonException: JSONException) {
                 Log.e("SignIn Error", "Error parsing error body: $e")
+                "Something went wrong. Please try again."
+            }
+            throw Exception(errorMessage)
+        } catch (e: Throwable) {
+            throw Exception(e.message ?: "Unknown error")
+        }
+    }
+
+    suspend fun resetPassword (email: String, newPassword: String): ResetPasswordResponse {
+        return try {
+            apiService.resetPassword(email, newPassword)
+        } catch (e: HttpException) {
+            val body = e.response()?.errorBody()?.string()
+            val errorMessage = try {
+                if (body != null) {
+                    JSONObject(body).getString("message")
+                } else {
+                    "Unknown error occurred."
+                }
+            } catch (jsonException: JSONException) {
                 "Something went wrong. Please try again."
             }
             throw Exception(errorMessage)
