@@ -7,18 +7,29 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.artnaon.R
+import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.databinding.ActivitySignInBinding
+import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainActivity
 import com.example.artnaon.ui.view.signup.SignUpActivity
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
+    private val viewModel: SignInViewModel by viewModels<SignInViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +97,8 @@ class SignInActivity : AppCompatActivity() {
 
     private fun createAnimator(view: View, duration: Long): AnimatorSet {
         val alphaAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f).setDuration(duration)
-        val translationYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f).setDuration(duration)
+        val translationYAnimator =
+            ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f).setDuration(duration)
         return AnimatorSet().apply {
             playTogether(alphaAnimator, translationYAnimator)
         }
@@ -97,8 +109,55 @@ class SignInActivity : AppCompatActivity() {
             val email = binding.edtSignInEmail.text.toString()
             val password = binding.edtSignInPassword.text.toString()
 
+            showLoading(true)
+
             if (email.isNotEmpty() && password.isNotEmpty()) {
-                startActivity(Intent(this@SignInActivity, MainActivity::class.java))
+                lifecycleScope.launch {
+                    viewModel.userSignIn(email, password)
+                    try {
+                        val result = viewModel.userSignIn(email, password)
+                        if (result.isSuccess) {
+                            val response = result.getOrNull()
+                            showLoading(false)
+                            if (response != null) {
+                                val token = response.result!!.token
+                                viewModel.saveSession(UserModel(email, token!!))
+                                AlertDialog.Builder(this@SignInActivity).apply {
+                                    setTitle("Asik!")
+                                    setMessage("Selamat datang di ArtNaon")
+                                    setPositiveButton("Lanjut") { _, _ ->
+                                        intent = Intent(this@SignInActivity, MainActivity::class.java)
+                                        startActivity(intent)
+                                        finish()
+                                    }
+                                    create()
+                                    show()
+                                }
+                            }
+                        } else {
+                            val exception = result.exceptionOrNull()
+                            exception?.message?.let {
+                                showLoading(false)
+                                AlertDialog.Builder(this@SignInActivity).apply {
+                                    setTitle("Error")
+                                    setMessage(it)
+                                    setPositiveButton("OK", null)
+                                    create()
+                                    show()
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        showLoading(false)
+                        AlertDialog.Builder(this@SignInActivity).apply {
+                            setTitle("Error")
+                            setMessage(getString(R.string.error_message))
+                            setPositiveButton("OK", null)
+                            create()
+                            show()
+                        }
+                    }
+                }
             } else {
                 if (email.isEmpty()) {
                     binding.edlSignInEmail.error = getString(R.string.error_message)
@@ -120,4 +179,11 @@ class SignInActivity : AppCompatActivity() {
             startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
         }
     }
+
+
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgSignIn.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
 }

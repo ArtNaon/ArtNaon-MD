@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id ("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -16,6 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"https://backend-2qimicuoja-et.a.run.app/\"")
     }
 
     buildTypes {
@@ -36,6 +38,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -67,4 +70,16 @@ dependencies {
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     implementation ("androidx.databinding:databinding-runtime:7.1.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+
+    //api
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.squareup.converter.gson)
+    implementation(libs.okhttp3.logging.interceptor)
+    implementation(libs.lifecycle.runtime.ktx)
+
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation (libs.androidx.lifecycle.extensions)
 }

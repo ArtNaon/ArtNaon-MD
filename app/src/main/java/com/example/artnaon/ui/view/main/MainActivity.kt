@@ -39,57 +39,57 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.ivActionBarUpload.setOnClickListener {
-            startActivity(Intent(this, UploadActivity::class.java))
-        }
+//        binding.ivActionBarUpload.setOnClickListener {
+//            startActivity(Intent(this, UploadActivity::class.java))
+//        }
     }
 
-    @SuppressLint("DiscouragedApi")
-    private fun setupSearch() {
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        binding.searchViewActionBar.apply {
-            setSearchableInfo(searchManager.getSearchableInfo(componentName))
-            setQueryHint(context.getString(R.string.search_hint))
-            val searchTextViewId = resources.getIdentifier("android:id/search_src_text", null, null)
-            val searchTextView = findViewById<TextView>(searchTextViewId)
-            searchTextView?.let {
-                it.typeface = ResourcesCompat.getFont(context, R.font.sfui_regular)
-                it.textSize = 13f
-            }
-            setIconifiedByDefault(false)
-            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    query?.let {
-                        if (isDataAvailable(it)) {
+//    @SuppressLint("DiscouragedApi")
+//    private fun setupSearch() {
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        binding.searchViewActionBar.apply {
+//            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//            setQueryHint(context.getString(R.string.search_hint))
+//            val searchTextViewId = resources.getIdentifier("android:id/search_src_text", null, null)
+//            val searchTextView = findViewById<TextView>(searchTextViewId)
+//            searchTextView?.let {
+//                it.typeface = ResourcesCompat.getFont(context, R.font.sfui_regular)
+//                it.textSize = 13f
+//            }
+//            setIconifiedByDefault(false)
+//            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    query?.let {
+//                        if (isDataAvailable(it)) {
+//
+//                        } else {
+//                            toastMessage("Maat tidak terdapat data $it")
+//                        }
+//                    }
+//                    return true
+//                }
+//
+//                override fun onQueryTextChange(newText: String?): Boolean {
+//                    return true
+//                }
+//            })
+//
+//            setOnCloseListener {
+//                visibility = View.GONE
+//                binding.tvActionBarName.visibility = View.VISIBLE
+//                false
+//            }
+//        }
+//    }
 
-                        } else {
-                            toastMessage("Maat tidak terdapat data $it")
-                        }
-                    }
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    return true
-                }
-            })
-
-            setOnCloseListener {
-                visibility = View.GONE
-                binding.tvActionBarName.visibility = View.VISIBLE
-                false
-            }
-        }
-    }
-
-    private fun isDataAvailable(query: String): Boolean {
-        return genres.any { it.name.equals(query, ignoreCase = true) }
-    }
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        navView.setupWithNavController(navController)
-    }
+//    private fun isDataAvailable(query: String): Boolean {
+//        return genres.any { it.name.equals(query, ignoreCase = true) }
+//    }
+//        val navView: BottomNavigationView = binding.navView
+//        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+//
+//        navView.setupWithNavController(navController)
+//    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)

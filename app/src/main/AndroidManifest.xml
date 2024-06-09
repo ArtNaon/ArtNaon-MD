@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -32,8 +32,6 @@
         <activity
             android:name=".ui.view.signin.SignInActivity"
             android:exported="true" />
-            android:name=".ui.view.profile.mypost.MyPostActivity"
-            android:exported="false" />
         <activity
             android:name=".ui.view.profile.editprofile.EditProfileActivity"
             android:exported="false" />
@@ -43,12 +41,6 @@
         <activity
             android:name=".ui.view.welcome.WelcomeActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.view.detail.DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.view.signin.SignInActivity"
-            android:exported="true" />
         <activity
             android:name=".ui.view.signup.SignUpActivity"
             android:exported="false" />
