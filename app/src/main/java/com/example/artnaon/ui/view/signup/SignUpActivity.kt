@@ -5,21 +5,36 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.artnaon.R
 import com.example.artnaon.databinding.ActivitySignUpBinding
+import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainActivity
 import com.example.artnaon.ui.view.signin.SignInActivity
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import org.json.JSONException
+import org.json.JSONObject
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
+    private val viewModel: SignUpViewModel by viewModels<SignUpViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,8 +123,38 @@ class SignUpActivity : AppCompatActivity() {
             val email = binding.edtSignUpEmail.text.toString()
             val password = binding.edtSignUpPassword.text.toString()
 
+            showLoading(true)
+
             if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                startActivity(Intent(this@SignUpActivity, SignInActivity::class.java))
+                lifecycleScope.launch {
+                    try {
+                        val message = viewModel.userSignUp(username, email, password).message
+                        Log.d("Sign Up Success", "$message")
+                        showLoading(false)
+                        AlertDialog.Builder(this@SignUpActivity).apply {
+                            setTitle("Asik")
+                            setMessage("Akun $username sudah jadi nih. Yuk, mulai login.")
+                            setPositiveButton("Lanjut") { _, _ ->
+                                intent = Intent(this@SignUpActivity, SignInActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                            create()
+                            show()
+                        }
+                    } catch (e: Exception) {
+                        val error = parseError(e.message)
+                        Log.e("Sign Up Failed", "${e.message}")
+                        showLoading(false)
+                        AlertDialog.Builder(this@SignUpActivity).apply {
+                            setTitle("Error")
+                            setMessage(error)
+                            setPositiveButton("OK", null)
+                            create()
+                            show()
+                        }
+                    }
+                }
             } else {
                 if (username.isEmpty()) {
                     binding.edlSignUpUsername.error = getString(R.string.error_message)
@@ -138,4 +183,22 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    private fun parseError(message: String?): String {
+        return try {
+            val jsonObject = JSONObject(message.toString())
+            jsonObject.getString("error")
+        } catch (e: JSONException) {
+            "Sepertinya email sudah digunakan nih."
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgSignUp.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        alertDialog?.dismiss()
+        lifecycleScope.cancel()
+    }
 }

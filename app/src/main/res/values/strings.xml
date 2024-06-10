@@ -55,4 +55,7 @@
     <string name="title_camera">Camera</string>
     <string name="title_profile">Profile</string>
     <string name="camera_btn">navigation Camera</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="type_your_new_password">Type Your New Password</string>
 </resources>
