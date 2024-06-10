@@ -17,5 +17,4 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
-
 </navigation>
