@@ -3,5 +3,14 @@
     <style name="Base.Theme.ArtNaon" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/colorPrimary</item>
+        <item name="colorSecondaryVariant">@color/colorPrimary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:titleTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 </resources>
