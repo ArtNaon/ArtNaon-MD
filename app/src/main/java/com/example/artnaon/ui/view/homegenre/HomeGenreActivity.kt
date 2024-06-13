@@ -1,42 +1,69 @@
 package com.example.artnaon.ui.view.homegenre
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.artnaon.R
+import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.ActivityHomeGenreBinding
-import com.example.artnaon.ui.view.main.ArtAdapter
+import com.example.artnaon.ui.view.home.PaintingAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeGenreActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHomeGenreBinding
-    private lateinit var homeGenreAdapter: ArtAdapter
 
-    private val images = listOf(
-        R.drawable.dummy_art,
-        R.drawable.dummy_art,
-        R.drawable.dummy_art,
-        R.drawable.dummy_art,
-        R.drawable.dummy_art
-    )
+    private lateinit var binding: ActivityHomeGenreBinding
+    private lateinit var paintingAdapter: PaintingAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeGenreBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
-        binding.rvHomeGenre.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
-
-        homeGenreAdapter = ArtAdapter(images)
-        binding.rvHomeGenre.adapter = homeGenreAdapter
+        val genre = intent.getStringExtra("GENRE_NAME") ?: ""
+        setupRecyclerView()
+        fetchGenrePaintings(genre)
 
         binding.ivHomeGenreBack.setOnClickListener {
-            onBackPressed()
+            finish()
+        }
+    }
+
+    private fun setupRecyclerView() {
+        paintingAdapter = PaintingAdapter(emptyList())
+        binding.rvHomeGenre.apply {
+            layoutManager = GridLayoutManager(this@HomeGenreActivity, 2)
+            adapter = paintingAdapter
+        }
+    }
+
+    private fun fetchGenrePaintings(genre: String) {
+        val apiConfig = ApiConfig()
+        val apiService = apiConfig.getApiService()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiService.getPaintingsByGenre(mapOf("genre" to genre))
+                if (response.status == "success") {
+                    val paintings = response.data ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        paintingAdapter.updateData(paintings)
+                        binding.tvHomeGenreName.text = genre
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@HomeGenreActivity, response.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("HomeGenreActivity", "Error fetching paintings", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@HomeGenreActivity, "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ArtNaon</string>
+    <string name="image_desc">Ini adalah gambar</string>
+    <string name="welcome_to_artnaon">Selamat datang di ArtNaon</string>
+    <string name="i_m_new_here">Saya Baru Di Sini</string>
+    <string name="sign_in">Masuk</string>
+    <string name="title_menu_1">Klasifikasikan Seni Anda</string>
+    <string name="title_menu_2">Unggah dan Temukan Seni</string>
+    <string name="title_menu_3">Temukan Genre Serupa</string>
+    <string name="title_menu_4">Temukan Seni Anda dengan Art Naon</string>
+    <string name="desc_menu_1">Ambil foto seni dan biarkan ArtNaon mengenali dan mengklasifikasikan genrenya. Dapatkan penjelasan rinci tentang setiap genre yang diidentifikasi.</string>
+    <string name="desc_menu_2">Unggah karya seni Anda sendiri dan jelajahi berbagai seni dari orang lain. Temukan inspirasi baru setiap hari.</string>
+    <string name="desc_menu_3">Temukan genre seni yang mirip dengan yang Anda foto atau unggah. Menyelam lebih dalam ke dunia seni dengan rekomendasi genre terkait untuk memperkaya pengetahuan Anda.</string>
+    <string name="desc_menu_4">Mulailah petualangan kreatif Anda dengan aplikasi Art Naon. Buat karya seni unik dan ekspresikan diri Anda tanpa batas.</string>
+    <string name="start_now">Mulai Sekarang</string>
+    <string name="sign_up">Daftar</string>
+    <string name="username">Nama Pengguna</string>
+    <string name="type_your_username">Ketik Nama Pengguna Anda</string>
+    <string name="email_address">Alamat Email</string>
+    <string name="type_your_email_address">Ketik Alamat Email Anda</string>
+    <string name="password">Kata Sandi</string>
+    <string name="type_your_password">Ketik Kata Sandi Anda</string>
+    <string name="register">Daftar</string>
+    <string name="you_already_have_account">Anda Sudah Punya Akun?</string>
+    <string name="don_t_have_an_account">Belum punya akun?</string>
+    <string name="login">Masuk</string>
+    <string name="error_password">Kata sandi Anda harus 8 karakter atau kurang</string>
+    <string name="error_email">Pastikan untuk memasukkan alamat email yang valid</string>
+    <string name="error_message">Pastikan untuk mengisi semua data yang diperlukan.</string>
+    <string name="genre">Genre</string>
+    <string name="genres">Genre</string>
+    <string name="search">Cari</string>
+    <string name="upload">Unggah</string>
+    <string name="search_hint">Cari genre tertentu</string>
+    <string name="back">Kembali</string>
+    <string name="download">Unduh</string>
+    <string name="save">Simpan</string>
+    <string name="romanticism">Romantisisme</string>
+    <string name="desc">Deskripsi</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin interdum commodo justo vitae luctus. Vestibulum et lacus sit amet turpis feugiat luctus id nec libero. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Donec ac interdum lacus, nec finibus sapien. Suspendisse porta neque augue, vel condimentum libero interdum vel. Nulla ultricies tempus massa. Mauris commodo eros ut tortor finibus, feugiat imperdiet nunc lacinia. Etiam justo augue, volutpat at est eu, tincidunt laoreet felis.</string>
+    <string name="similar_genre">Genre Serupa</string>
+    <string name="create_post">Buat Postingan</string>
+    <string name="edt_desc">Tambahkan deskripsi agar semua orang tahu tentang karya seni Anda.</string>
+    <string-array name="genre_array">
+        <item>Abstrak</item>
+        <item>Kubis</item>
+        <item>Ekspresionis</item>
+        <item>Impresionis</item>
+        <item>Pemandangan</item>
+        <item>Pop Art</item>
+        <item>Potret</item>
+        <item>Realistis</item>
+        <item>Benda Mati</item>
+        <item>Surealis</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Halo fragmen kosong</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_camera">Kamera</string>
+    <string name="title_profile">Profil</string>
+    <string name="camera_btn">navigasi Kamera</string>
+    <string name="forgot_password">Lupa Kata Sandi?</string>
+    <string name="reset_password">Atur Ulang Kata Sandi</string>
+    <string name="type_your_new_password">Ketik Kata Sandi Baru Anda</string>
+    <string name="addimage">Tambahkan Gambar</string>
+    <string name="setting">Pengaturan</string>
+    <string name="my_post">Postingan Saya</string>
+    <string name="save_post">Simpan Postingan</string>
+    <string name="post">Postingan</string>
+    <string name="my_profile">Profil Saya</string>
+    <string name="about">Tentang</string>
+    <string name="log_out">Keluar</string>
+    <string name="suggest">Saran</string>
+    <string name="report">Laporan</string>
+    <string name="language">Bahasa</string>
+    <string name="dark_mode">Mode Gelap</string>
+    <string name="terms_and_policies">Syarat dan Kebijakan</string>
+    <string name="terms_policies">Syarat dan Kebijakan</string>
+    <string name="or">——— ATAU ———</string>
+    <string name="sign_in_with_google">Masuk Dengan Google</string>
+</resources>
