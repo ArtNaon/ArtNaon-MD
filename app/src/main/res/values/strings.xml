@@ -66,4 +66,20 @@
     <string name="reset_password">Reset Password</string>
     <string name="type_your_new_password">Type Your New Password</string>
     <string name="addimage">Add Image</string>
+    <string name="setting">Setting</string>
+    <string name="my_post">My Post</string>
+    <string name="save_post">Save Post</string>
+    <string name="post">Post</string>
+    <string name="my_profile">My Profile</string>
+    <string name="about">About</string>
+    <string name="log_out">Log Out</string>
+    <string name="suggest">Suggest</string>
+    <string name="report">Report</string>
+    <string name="language">Language</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="terms_and_policies">Terms and Policies</string>
+    <string name="terms_policies">Terms and Policies</string>
+    <string name="or">——— OR ———</string>
+    <string name="sign_in_with_google">Sign In With Google</string>
+
 </resources>

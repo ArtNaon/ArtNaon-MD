@@ -90,6 +90,14 @@ class UserRepository (
         preference.logout()
     }
 
+    fun getThemeSetting(): Flow<Boolean> {
+        return preference.getThemeSetting()
+    }
+
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+        preference.saveThemeSetting(isDarkModeActive)
+    }
+
     companion object {
         fun getInstance(
             preferences: UserPreference,

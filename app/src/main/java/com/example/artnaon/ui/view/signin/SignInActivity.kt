@@ -75,25 +75,26 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-        val duration = 550L
+        val duration = 350L
+        val delay = 50L
 
         val email = createAnimator(binding.tvSignInEmail, duration)
         val edlEmail = createAnimator(binding.edlSignInEmail, duration)
         val password = createAnimator(binding.tvSignInPassword, duration)
         val edlPassword = createAnimator(binding.edlSignInPassword, duration)
+        val resetPassword = createAnimator(binding.tvSignInResetPassword, duration)
         val signin = createAnimator(binding.btnSignIn, duration)
         val signup = createAnimator(binding.layoutSignInSignUp, duration)
-        val resetPassword = createAnimator(binding.tvSignInResetPassword, duration)
 
         AnimatorSet().apply {
             playSequentially(
-                email,
-                edlEmail,
-                password,
-                edlPassword,
-                resetPassword,
-                signin,
-                signup
+                email.apply { startDelay = delay },
+                edlEmail.apply { startDelay = delay },
+                password.apply { startDelay = delay },
+                edlPassword.apply { startDelay = delay },
+                resetPassword.apply { startDelay = delay },
+                signin.apply { startDelay = delay },
+                signup.apply { startDelay = delay }
             )
             startDelay = 150
             start()
@@ -102,12 +103,12 @@ class SignInActivity : AppCompatActivity() {
 
     private fun createAnimator(view: View, duration: Long): AnimatorSet {
         val alphaAnimator = ObjectAnimator.ofFloat(view, View.ALPHA, 1f).setDuration(duration)
-        val translationYAnimator =
-            ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f).setDuration(duration)
+        val translationYAnimator = ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, 0f).setDuration(duration)
         return AnimatorSet().apply {
             playTogether(alphaAnimator, translationYAnimator)
         }
     }
+
 
     private fun setupAction() {
         binding.btnSignIn.setOnClickListener {
