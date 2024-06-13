@@ -1,5 +1,6 @@
 package com.example.artnaon.ui.view.profile.editprofile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.artnaon.R
 
 class EditProfileActivity : AppCompatActivity() {
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

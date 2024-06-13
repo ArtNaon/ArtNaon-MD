@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.dicoding.picodiploma.loginwithanimation.helper.reduceFileImage
@@ -19,6 +20,8 @@ import com.dicoding.picodiploma.loginwithanimation.helper.uriToFile
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.ActivityUploadBinding
+import com.example.artnaon.ui.ViewModelFactory
+import com.example.artnaon.ui.view.main.MainViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,6 +34,11 @@ class UploadActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUploadBinding
     private var selectedFileUri: Uri? = null
     private lateinit var selectedGenre: String
+    private lateinit var email: String
+
+    private val mainViewModel: MainViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     companion object {
         private const val PICK_IMAGE_REQUEST = 1
@@ -44,6 +52,15 @@ class UploadActivity : AppCompatActivity() {
 
         setupListeners()
         setupSpinner()
+        observeSession()
+    }
+
+    private fun observeSession() {
+        mainViewModel.getSession().observe(this) { userModel ->
+            if (userModel != null) {
+                email = userModel.email
+            }
+        }
     }
 
     private fun setupListeners() {
@@ -114,6 +131,7 @@ class UploadActivity : AppCompatActivity() {
 
             val requestFile = RequestBody.create("image/*".toMediaType(), processedFile)
             val body = MultipartBody.Part.createFormData("painting", processedFile.name, requestFile)
+            val emailBody = RequestBody.create("text/plain".toMediaType(), email)
             val genreBody = RequestBody.create("text/plain".toMediaType(), genre)
             val descriptionBody = RequestBody.create("text/plain".toMediaType(), description)
 
@@ -122,7 +140,7 @@ class UploadActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 try {
                     val apiService = ApiConfig().getApiService()
-                    val response = apiService.uploadPainting(genreBody, descriptionBody, body)
+                    val response = apiService.uploadPainting(emailBody, genreBody, descriptionBody, body)
                     showLoading(false)
                     if (response.status == "success") {
                         showToast(response.message)

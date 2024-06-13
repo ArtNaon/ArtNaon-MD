@@ -34,7 +34,6 @@ class HomeFragment : Fragment() {
     private val genres = listOf(
         Genre("Romanticism"),
         Genre("Abstract")
-
     )
 
     override fun onCreateView(
@@ -58,40 +57,47 @@ class HomeFragment : Fragment() {
         // Setup RecyclerView for genres
         genreAdapter = GenreAdapter(genres)
         binding.rvMainGenre.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = genreAdapter
         }
 
         // Setup RecyclerView for art
-        paintingAdapter = PaintingAdapter(emptyList())
         binding.rvMainArt.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
+            paintingAdapter = PaintingAdapter(emptyList())
             adapter = paintingAdapter
         }
     }
 
     private fun fetchPaintings() {
-        val apiService = ApiConfig().getApiService()
+        val apiConfig = ApiConfig()
+        val apiService = apiConfig.getApiService()
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val response = apiService.getHomePage()
                 val paintings = response.result ?: emptyList()
-                Log.d("HomeFragment", "Paintings: $paintings")
-                paintingAdapter.updateData(paintings)
+                if (isAdded) {
+                    paintingAdapter.updateData(paintings)
+                }
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Error fetching paintings", e)
-                Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun setupSearch() {
-        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager =
+            requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.searchViewActionBar.apply {
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
             setQueryHint(getString(R.string.search_hint))
-            val searchTextViewId = resources.getIdentifier("android:id/search_src_text", null, null)
+            val searchTextViewId =
+                resources.getIdentifier("android:id/search_src_text", null, null)
             val searchTextView = findViewById<TextView>(searchTextViewId)
             searchTextView?.let {
                 it.typeface = ResourcesCompat.getFont(requireContext(), R.font.sfui_regular)

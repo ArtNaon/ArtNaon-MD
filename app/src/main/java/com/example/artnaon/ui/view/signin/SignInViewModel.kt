@@ -14,25 +14,23 @@ class SignInViewModel(private val repository: UserRepository) : ViewModel() {
     private val _errorMessage = MutableLiveData<String>()
     val errorMessage: LiveData<String> = _errorMessage
 
-    suspend fun userSignIn(email: String?, password: String?): Result<LoginResponse> {
-        val emailUser = email.orEmpty()
-        val passwordUser = password.orEmpty()
-        if (emailUser.isEmpty() || passwordUser.isEmpty()) {
+    suspend fun userSignIn(email: String, password: String): Result<LoginResponse> {
+        if (email.isEmpty() || password.isEmpty()) {
             _errorMessage.postValue("Fields cannot be empty")
             return Result.failure(Exception("Fields cannot be empty"))
         }
 
-        if (passwordUser.length < 8) {
+        if (password.length < 8) {
             _errorMessage.postValue("Password must be at least 8 characters")
             return Result.failure(Exception("Password must be at least 8 characters"))
         }
 
         return try {
-            val response = repository.userSignIn(emailUser, passwordUser)
+            val response = repository.userSignIn(email, password)
             Result.success(response)
         } catch (e: Exception) {
             _errorMessage.postValue(e.message ?: "Unknown error")
-            Result.failure(e)
+            return Result.failure(e)
         }
     }
 

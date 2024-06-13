@@ -119,15 +119,14 @@ class SignInActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 lifecycleScope.launch {
-                    viewModel.userSignIn(email, password)
                     try {
                         val result = viewModel.userSignIn(email, password)
                         if (result.isSuccess) {
                             val response = result.getOrNull()
                             showLoading(false)
                             if (response != null) {
-                                val token = response.result!!.token
-                                viewModel.saveSession(UserModel(email, token!!))
+                                val token = response.result?.token
+                                viewModel.saveSession(UserModel(name = "", email = email, token = token ?: "", isLogin = true))
                                 AlertDialog.Builder(this@SignInActivity).apply {
                                     setTitle("Asik!")
                                     setMessage("Selamat datang di ArtNaon")
@@ -190,7 +189,6 @@ class SignInActivity : AppCompatActivity() {
             startActivity(Intent(this@SignInActivity, ResetPasswordActivity::class.java))
         }
     }
-
 
     private fun showLoading(isLoading: Boolean) {
         binding.pgSignIn.visibility = if (isLoading) View.VISIBLE else View.GONE

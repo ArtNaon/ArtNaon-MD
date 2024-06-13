@@ -5,6 +5,7 @@ import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.data.pref.UserPreference
+import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
@@ -31,13 +32,13 @@ class UserRepository (
         }
     }
 
-    suspend fun userSignIn(email: String, password: String) : LoginResponse {
+    suspend fun userSignIn(email: String, password: String): LoginResponse {
         return try {
-            val apiConfig = ApiConfig()
             val response = apiService.login(email, password)
             val token = response.result?.token ?: ""
-            val model = UserModel(email = email, token = token, isLogin = true)
+            val model = UserModel(name = "", email = email, token = token, isLogin = true)
             saveSession(model)
+            val apiConfig = ApiConfig()
             apiConfig.setToken(token)
             response
         } catch (e: HttpException) {
@@ -96,6 +97,28 @@ class UserRepository (
 
     suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
         preference.saveThemeSetting(isDarkModeActive)
+    }
+
+    suspend fun getUserProfile(email: String): LoginResponse {
+        return try {
+            val response = apiService.userProfile(email)
+            Log.d("UserRepository", "User profile response: $response")
+            response
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Error fetching user profile", e)
+            throw e
+        }
+    }
+
+    suspend fun getUserPaintings(email: String): ListPaintingResponse {
+        return try {
+            apiService.userPaintings(email)
+        } catch (e: HttpException) {
+            val body = e.response()?.errorBody()?.string()
+            throw Exception(body)
+        } catch (e: Throwable) {
+            throw Exception(e.message)
+        }
     }
 
     companion object {

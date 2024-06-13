@@ -2,6 +2,7 @@ package com.example.artnaon.ui.view.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.lifecycle.Observer
 import com.example.artnaon.R
 import com.example.artnaon.databinding.FragmentProfileBinding
 import com.example.artnaon.ui.ViewModelFactory
+import com.example.artnaon.ui.view.main.MainViewModel
+import com.example.artnaon.ui.view.profile.mypost.MyPostActivity
 import com.example.artnaon.ui.view.signin.SignInActivity
 import com.example.artnaon.ui.view.splash.SplashActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
@@ -31,6 +34,10 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
+    private val mainViewModel by viewModels<MainViewModel> {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +51,20 @@ class ProfileFragment : Fragment() {
 
         setupLogout()
         setupSwitchMode()
+        setupUserProfile()
+
+        binding.myPostProfile.setOnClickListener {
+            startActivity(Intent(activity, MyPostActivity::class.java))
+        }
+    }
+
+    private fun setupUserProfile() {
+        mainViewModel.getSession().observe(viewLifecycleOwner) { userModel ->
+            if (userModel != null) {
+                binding.usernameTextView.text = userModel.name
+                binding.emailTextView.text = userModel.email
+            }
+        }
     }
 
     private fun setupLogout() {

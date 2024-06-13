@@ -8,8 +8,6 @@ import com.example.artnaon.data.response.UploadResponse
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -41,15 +39,30 @@ interface ApiService {
     ): ResetPasswordResponse
 
     @GET("homePage")
-    suspend fun getHomePage(): ListPaintingResponse
+    suspend fun getHomePage(
+    ): ListPaintingResponse
+
+    @GET("genreList")
+    suspend fun genreList(): ListPaintingResponse
+
+    @FormUrlEncoded
+    @POST("user")
+    suspend fun userProfile(
+        @Field("email") email: String
+    ): LoginResponse
+
+    @FormUrlEncoded
+    @POST("userPaintings")
+    suspend fun userPaintings(
+        @Field("email") email: String
+    ): ListPaintingResponse
 
     @Multipart
     @POST("upload")
     suspend fun uploadPainting(
+        @Part("email") email: RequestBody,
         @Part("genre") genre: RequestBody,
         @Part("description") description: RequestBody,
         @Part painting: MultipartBody.Part
     ): UploadResponse
 }
-
-
