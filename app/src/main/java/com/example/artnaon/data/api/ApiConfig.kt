@@ -7,8 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiConfig {
-    private var token: String? = null
+class ApiConfig(private var token: String? = null) {
 
     fun setToken(newToken: String) {
         token = newToken
@@ -34,5 +33,5 @@ object ApiConfig {
             .client(client)
             .build()
         return retrofit.create(ApiService::class.java)
-    }
+        }
 }

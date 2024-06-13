@@ -14,6 +14,7 @@ import org.json.JSONObject
 import retrofit2.HttpException
 
 class UserRepository (
+
     private val preference: UserPreference,
     private val apiService: ApiService
 ) {
@@ -32,11 +33,12 @@ class UserRepository (
 
     suspend fun userSignIn(email: String, password: String) : LoginResponse {
         return try {
+            val apiConfig = ApiConfig()
             val response = apiService.login(email, password)
             val token = response.result?.token ?: ""
             val model = UserModel(email = email, token = token, isLogin = true)
             saveSession(model)
-            ApiConfig.setToken(token)
+            apiConfig.setToken(token)
             response
         } catch (e: HttpException) {
             val errorMessage = try {

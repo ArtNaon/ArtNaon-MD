@@ -4,9 +4,12 @@ import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
-import com.google.firebase.appdistribution.gradle.models.UploadResponse
+import com.example.artnaon.data.response.UploadResponse
+
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -43,10 +46,10 @@ interface ApiService {
     @Multipart
     @POST("upload")
     suspend fun uploadPainting(
-        @Part("userId") userId: RequestBody,
         @Part("genre") genre: RequestBody,
         @Part("description") description: RequestBody,
         @Part painting: MultipartBody.Part
     ): UploadResponse
 }
+
 

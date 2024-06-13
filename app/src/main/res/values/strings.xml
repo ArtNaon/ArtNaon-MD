@@ -41,14 +41,21 @@
     <string name="similar_genre">Similar Genre</string>
     <string name="create_post">Create Post</string>
     <string name="edt_desc">Add a description to let everyone know what your Art is about.</string>
+        <!-- Other strings -->
+        <string-array name="genre_array">
+            <item>Romanticism</item>
+            <item>Abstract</item>
+            <item>Fauvism</item>
+            <item>Pop Art</item>
+            <item>Realism</item>
+            <item>Cubism</item>
+            <item>Dadaism</item>
+            <item>Minimalism</item>
+            <item>Surrealist</item>
+            <item>Symbolism</item>
+        </string-array>
 
-    <string-array name="spinner_items">
-        <item>Select a Genre</item>
-        <item>Romanticism</item>
-        <item>Abstract</item>
-        <item>Fauvism</item>
-        <item>Pop Art</item>
-    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Home</string>
@@ -58,4 +65,5 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="reset_password">Reset Password</string>
     <string name="type_your_new_password">Type Your New Password</string>
+    <string name="addimage">Add Image</string>
 </resources>

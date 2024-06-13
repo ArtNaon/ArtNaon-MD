@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class ListPaintingResponse(
 
-	@field:SerializedName("paintings")
-	val paintings: List<String?>? = null,
+	@field:SerializedName("result")
+	val result: List<String?>? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,

@@ -3,23 +3,25 @@ package com.example.artnaon.data.response
 import com.google.gson.annotations.SerializedName
 
 data class UploadResponse(
-	@SerializedName("data")
-	val data: Data? = null,
 
-	@SerializedName("message")
-	val message: String? = null,
+	@field:SerializedName("data")
+	val data: Data,
 
-	@SerializedName("status")
-	val status: String? = null
+	@field:SerializedName("message")
+	val message: String,
+
+	@field:SerializedName("status")
+	val status: String
 )
 
 data class Data(
-	@SerializedName("genre")
-	val genre: String? = null,
 
-	@SerializedName("description")
-	val description: String? = null,
+	@field:SerializedName("genre")
+	val genre: String,
 
-	@SerializedName("Url")
-	val url: String? = null
+	@field:SerializedName("description")
+	val description: String,
+
+	@field:SerializedName("Url")
+	val url: String
 )
