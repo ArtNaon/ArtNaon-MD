@@ -82,7 +82,8 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun playAnimation() {
-        val duration = 550L
+        val duration = 350L
+        val delay = 50L
 
         val usernameAnim = createAnimator(binding.tvSignUpName, duration)
         val edlUsernameAnim = createAnimator(binding.edlSignUpUsername, duration)
@@ -95,14 +96,14 @@ class SignUpActivity : AppCompatActivity() {
 
         AnimatorSet().apply {
             playSequentially(
-                usernameAnim,
-                edlUsernameAnim,
-                emailAnim,
-                edlEmailAnim,
-                passwordAnim,
-                edlPasswordAnim,
-                signupAnim,
-                signinAnim
+                usernameAnim.apply { startDelay = delay },
+                edlUsernameAnim.apply { startDelay = delay },
+                emailAnim.apply { startDelay = delay },
+                edlEmailAnim.apply { startDelay = delay },
+                passwordAnim.apply { startDelay = delay },
+                edlPasswordAnim.apply { startDelay = delay },
+                signupAnim.apply { startDelay = delay },
+                signinAnim.apply { startDelay = delay }
             )
             startDelay = 150
             start()
@@ -116,6 +117,7 @@ class SignUpActivity : AppCompatActivity() {
             playTogether(alphaAnimator, translationYAnimator)
         }
     }
+
 
     private fun setupAction() {
         binding.btnSignUp.setOnClickListener {
