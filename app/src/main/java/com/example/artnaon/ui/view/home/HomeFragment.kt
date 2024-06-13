@@ -2,7 +2,9 @@ package com.example.artnaon.ui.view.home
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,34 +13,28 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
+import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.FragmentHomeBinding
-import com.example.artnaon.ui.view.main.ArtAdapter
 import com.example.artnaon.ui.view.main.Genre
 import com.example.artnaon.ui.view.main.GenreAdapter
+import com.example.artnaon.ui.view.upload.UploadActivity
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var genreAdapter: GenreAdapter
-    private lateinit var artAdapter: ArtAdapter
-
-    private val images = listOf(
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art,
-        R.drawable.logo_art
-    )
+    private lateinit var paintingAdapter: PaintingAdapter
 
     private val genres = listOf(
         Genre("Romanticism"),
-        Genre("Abstract"),
-        Genre("Fauvism"),
-        Genre("Pop Art")
+        Genre("Abstract")
+
     )
 
     override fun onCreateView(
@@ -55,6 +51,7 @@ class HomeFragment : Fragment() {
         setupRecyclerViews()
         setupSearch()
         setupActionBar()
+        fetchPaintings()
     }
 
     private fun setupRecyclerViews() {
@@ -66,13 +63,28 @@ class HomeFragment : Fragment() {
         }
 
         // Setup RecyclerView for art
-        artAdapter = ArtAdapter(images)
+        paintingAdapter = PaintingAdapter(emptyList())
         binding.rvMainArt.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            adapter = artAdapter
+            adapter = paintingAdapter
         }
     }
 
+    private fun fetchPaintings() {
+        val apiService = ApiConfig().getApiService()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            try {
+                val response = apiService.getHomePage()
+                val paintings = response.result ?: emptyList()
+                Log.d("HomeFragment", "Paintings: $paintings")
+                paintingAdapter.updateData(paintings)
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Error fetching paintings", e)
+                Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
 
     private fun setupSearch() {
         val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
@@ -119,7 +131,8 @@ class HomeFragment : Fragment() {
         }
 
         binding.ivActionBarUpload.setOnClickListener {
-            // Handle upload action
+            val intent = Intent(requireContext(), UploadActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -129,6 +142,11 @@ class HomeFragment : Fragment() {
 
     private fun toastMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchPaintings()
     }
 
     override fun onDestroyView() {
