@@ -9,8 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.artnaon.R
 import com.google.android.material.imageview.ShapeableImageView
 
-class PaintingAdapter(private var paintings: List<String?>) :
-    RecyclerView.Adapter<PaintingAdapter.PaintingViewHolder>() {
+class PaintingAdapter(private var paintings: List<String?>) : RecyclerView.Adapter<PaintingAdapter.PaintingViewHolder>() {
 
     class PaintingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ShapeableImageView = view.findViewById(R.id.iv_item_art)

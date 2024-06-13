@@ -33,5 +33,5 @@ class ApiConfig(private var token: String? = null) {
             .client(client)
             .build()
         return retrofit.create(ApiService::class.java)
-    }
+        }
 }

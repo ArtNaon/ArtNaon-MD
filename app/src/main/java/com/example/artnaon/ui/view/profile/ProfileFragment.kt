@@ -19,6 +19,14 @@ import com.example.artnaon.ui.view.signin.SignInActivity
 import com.example.artnaon.ui.view.splash.SplashActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
 
+
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+
+
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
 

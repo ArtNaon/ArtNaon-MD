@@ -12,5 +12,5 @@ object Injection {
         val apiConfig = ApiConfig()
         val apiService = apiConfig.getApiService()
         return UserRepository.getInstance(preferences, apiService)
-    }
+        }
 }

@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.FragmentHomeBinding
-import com.example.artnaon.ui.view.main.ArtAdapter
 import com.example.artnaon.ui.view.main.Genre
 import com.example.artnaon.ui.view.main.GenreAdapter
 import com.example.artnaon.ui.view.upload.UploadActivity
@@ -33,9 +33,7 @@ class HomeFragment : Fragment() {
 
     private val genres = listOf(
         Genre("Romanticism"),
-        Genre("Abstract"),
-        Genre("Fauvism"),
-        Genre("Pop Art")
+        Genre("Abstract")
     )
 
     override fun onCreateView(
@@ -59,13 +57,16 @@ class HomeFragment : Fragment() {
         // Setup RecyclerView for genres
         genreAdapter = GenreAdapter(genres)
         binding.rvMainGenre.apply {
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = genreAdapter
         }
 
         // Setup RecyclerView for art
         binding.rvMainArt.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
+            paintingAdapter = PaintingAdapter(emptyList())
+            adapter = paintingAdapter
         }
     }
 
@@ -77,20 +78,26 @@ class HomeFragment : Fragment() {
             try {
                 val response = apiService.getHomePage()
                 val paintings = response.result ?: emptyList()
-                paintingAdapter = PaintingAdapter(paintings)
-                binding.rvMainArt.adapter = paintingAdapter
+                if (isAdded) {
+                    paintingAdapter.updateData(paintings)
+                }
             } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                Log.e("HomeFragment", "Error fetching paintings", e)
+                if (isAdded) {
+                    Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun setupSearch() {
-        val searchManager = requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchManager =
+            requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         binding.searchViewActionBar.apply {
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
             setQueryHint(getString(R.string.search_hint))
-            val searchTextViewId = resources.getIdentifier("android:id/search_src_text", null, null)
+            val searchTextViewId =
+                resources.getIdentifier("android:id/search_src_text", null, null)
             val searchTextView = findViewById<TextView>(searchTextViewId)
             searchTextView?.let {
                 it.typeface = ResourcesCompat.getFont(requireContext(), R.font.sfui_regular)
@@ -141,6 +148,11 @@ class HomeFragment : Fragment() {
 
     private fun toastMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        fetchPaintings()
     }
 
     override fun onDestroyView() {

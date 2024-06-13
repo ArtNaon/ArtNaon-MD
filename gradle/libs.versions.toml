@@ -17,6 +17,7 @@ navigationFragment = "2.7.7"
 playServicesAuth = "21.2.0"
 retrofitVersion = "2.9.0"
 datastorePreferencesCoreJvm = "1.1.1"
+firebaseAppdistributionGradle = "5.0.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -39,6 +40,7 @@ play-services-auth = { module = "com.google.android.gms:play-services-auth", ver
 retrofit2-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofitVersion" }
 squareup-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofitVersion" }
 androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version.ref = "datastorePreferencesCoreJvm" }
+firebase-appdistribution-gradle = { group = "com.google.firebase", name = "firebase-appdistribution-gradle", version.ref = "firebaseAppdistributionGradle" }
 
 
 [plugins]
