@@ -16,7 +16,7 @@
         android:fontFamily="@font/sfui_semibold"
         android:gravity="center_vertical|center"
         android:padding="8dp"
-        android:text="@string/genre"
+        android:text="Genre"
         android:textAllCaps="false"
         android:textColor="@color/colorTextGenre"
         android:textSize="12sp"

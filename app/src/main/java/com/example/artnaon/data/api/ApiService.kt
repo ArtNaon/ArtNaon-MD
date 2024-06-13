@@ -1,5 +1,7 @@
 package com.example.artnaon.data.api
 
+import com.example.artnaon.data.response.GenreListResponse
+import com.example.artnaon.data.response.HomeGenreResponse
 import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
@@ -8,6 +10,7 @@ import com.example.artnaon.data.response.UploadResponse
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -42,9 +45,6 @@ interface ApiService {
     suspend fun getHomePage(
     ): ListPaintingResponse
 
-    @GET("genreList")
-    suspend fun genreList(): ListPaintingResponse
-
     @FormUrlEncoded
     @POST("user")
     suspend fun userProfile(
@@ -65,4 +65,10 @@ interface ApiService {
         @Part("description") description: RequestBody,
         @Part painting: MultipartBody.Part
     ): UploadResponse
+
+    @GET("genreList")
+    suspend fun getGenres(): GenreListResponse
+
+    @POST("genre")
+    suspend fun getPaintingsByGenre(@Body request: Map<String, String>): HomeGenreResponse
 }

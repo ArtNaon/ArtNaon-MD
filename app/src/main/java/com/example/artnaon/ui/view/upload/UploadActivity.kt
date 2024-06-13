@@ -40,10 +40,7 @@ class UploadActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-    companion object {
-        private const val PICK_IMAGE_REQUEST = 1
-        private const val TAG = "UploadActivity"
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,5 +177,10 @@ class UploadActivity : AppCompatActivity() {
             val networkInfo = connectivityManager.activeNetworkInfo
             return networkInfo != null && networkInfo.isConnected
         }
+    }
+
+    companion object {
+        private const val PICK_IMAGE_REQUEST = 1
+        private const val TAG = "UploadActivity"
     }
 }

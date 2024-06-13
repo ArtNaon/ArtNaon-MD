@@ -1,8 +1,10 @@
 package com.example.artnaon.ui.view.profile
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,17 +17,8 @@ import com.example.artnaon.databinding.FragmentProfileBinding
 import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainViewModel
 import com.example.artnaon.ui.view.profile.mypost.MyPostActivity
-import com.example.artnaon.ui.view.signin.SignInActivity
-import com.example.artnaon.ui.view.splash.SplashActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
-
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-
+import java.util.*
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
@@ -52,6 +45,7 @@ class ProfileFragment : Fragment() {
         setupLogout()
         setupSwitchMode()
         setupUserProfile()
+        setupLanguageSelection()
 
         binding.myPostProfile.setOnClickListener {
             startActivity(Intent(activity, MyPostActivity::class.java))
@@ -87,9 +81,39 @@ class ProfileFragment : Fragment() {
             binding.darkmodeSwitch.isChecked = isDarkModeActive
         })
 
-        // Switch to toggle theme
         binding.darkmodeSwitch.setOnCheckedChangeListener { _, isChecked ->
             viewModel.saveThemeSetting(isChecked)
         }
+    }
+
+    private fun setupLanguageSelection() {
+        binding.languageCardlayout.setOnClickListener {
+            showLanguageSelectionDialog()
+        }
+    }
+
+    private fun showLanguageSelectionDialog() {
+        val languages = arrayOf("English", "Indonesian")
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(R.string.select_language)
+            .setItems(languages) { _, which ->
+                when (which) {
+                    0 -> setLocale("en")
+                    1 -> setLocale("id")
+                }
+            }
+        builder.create().show()
+    }
+
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        requireActivity().resources.updateConfiguration(config, requireActivity().resources.displayMetrics)
+        // Restart activity to apply changes
+        val intent = Intent(requireContext(), requireActivity()::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 }
