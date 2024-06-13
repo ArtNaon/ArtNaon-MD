@@ -66,13 +66,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupAction() {
 
         viewModel.getSession().observe(this) {
+            val apiConfig = ApiConfig()
+
             if (!it.isLogin) {
                 val intent = Intent(this, SplashActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                  startActivity(intent)
                 finish()
             } else {
-                ApiConfig.setToken(it.token)
+                apiConfig.setToken(it.token)
             }
         }
     }

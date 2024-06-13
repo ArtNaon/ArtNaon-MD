@@ -9,7 +9,8 @@ import com.example.artnaon.data.repository.UserRepository
 object Injection {
     fun provideRepository(context: Context): UserRepository {
         val preferences = UserPreference.getInstance(context.dataStore)
-        val apiService = ApiConfig.getApiService()
+        val apiConfig = ApiConfig()
+        val apiService = apiConfig.getApiService()
         return UserRepository.getInstance(preferences, apiService)
     }
 }

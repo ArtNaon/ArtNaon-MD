@@ -44,7 +44,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/profile" />
+                android:src="@drawable/logo_art" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -59,7 +59,7 @@
                     android:id="@+id/usernameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yuzzar"
+                    android:text="@string/username"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -67,7 +67,7 @@
                     android:id="@+id/emailTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="yuzzarmalik1@gmail.com"
+                    android:text="@string/email_address"
                     android:textColor="@android:color/darker_gray" />
             </LinearLayout>
 
@@ -176,6 +176,7 @@
                         tools:ignore="RtlSymmetry" />
 
                     <ImageView
+                        android:id="@+id/iv_profile_my_post"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_gravity="center_vertical"
