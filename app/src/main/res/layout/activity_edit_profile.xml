@@ -59,7 +59,7 @@
         android:padding="12dp"
         app:boxCornerRadiusTopEnd="10dp"
         app:boxCornerRadiusTopStart="10dp">
-        <com.example.artnaon.ui.view.customize.EmailEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_Username_EditProfile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,20 +73,20 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/emailEditText"
+        android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/usernameEditText"
         android:layout_marginTop="8dp"
         android:padding="12dp">
-        <com.example.artnaon.ui.view.customize.EmailEditText
-            android:id="@+id/edt_sign_in_email"
+        <com.example.artnaon.ui.view.customize.PasswordEditText
+            android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:fontFamily="@font/sfui_regular"
-            android:hint="@string/email_address"
-            android:inputType="textEmailAddress"
+            android:hint="@string/password"
+            android:inputType="textPassword"
             android:textColor="@color/colorPrimary"
             android:textColorHint="@color/colorHint"
             android:textSize="14sp" />
@@ -97,7 +97,7 @@
         android:layout_width="200dp"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
-        android:layout_below="@id/emailEditText"
+        android:layout_below="@id/passwordEditText"
         android:layout_marginTop="16dp"
         android:background="@drawable/bg_button_mini"
         android:text="Change"

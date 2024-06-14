@@ -7,14 +7,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.artnaon.data.repository.UserRepository
+import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.Result
 import com.example.artnaon.data.response.UserResult
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import okhttp3.MultipartBody
 
 class ProfileViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _logoutState = MutableLiveData<Boolean>()
+
+    private val _editProfileResult = MutableLiveData<EditProfileResponse>()
+    val editProfileResult: LiveData<EditProfileResponse> get() = _editProfileResult
 
     private val _userDetails = MutableLiveData<UserResult>()
     val userDetails: LiveData<UserResult> get() = _userDetails
@@ -50,13 +55,24 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
-    fun fetchUserPaintings(email: String) {
+    fun editProfile(name: String, password: String, picture: MultipartBody.Part?) {
         viewModelScope.launch {
             try {
-                val response = repository.getUserDetails(email)
-                _userDetails.value = response!!
+                val response = repository.editProfile(name, password, picture)
+                _editProfileResult.value = response
             } catch (e: Exception) {
-                // handle error
+                // Handle error
+            }
+
+            fun fetchUserPaintings(email: String) {
+                viewModelScope.launch {
+                    try {
+                        val response = repository.getUserDetails(email)
+                        _userDetails.value = response!!
+                    } catch (e: Exception) {
+                        // handle error
+                    }
+                }
             }
         }
     }

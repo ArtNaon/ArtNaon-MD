@@ -1,4 +1,3 @@
-// ProfileFragment
 package com.example.artnaon.ui.view.profile
 
 import android.content.Intent
@@ -11,10 +10,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.artnaon.R
 import com.example.artnaon.databinding.FragmentProfileBinding
 import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainViewModel
+import com.example.artnaon.ui.view.profile.editprofile.EditProfileActivity
 import com.example.artnaon.ui.view.profile.mypost.MyPostActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
 import java.util.Locale
@@ -49,6 +50,11 @@ class ProfileFragment : Fragment() {
         binding.myPostProfile.setOnClickListener {
             startActivity(Intent(activity, MyPostActivity::class.java))
         }
+
+        binding.editButton.setOnClickListener {
+            val intent = Intent(activity, EditProfileActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupUserProfile() {
@@ -62,9 +68,16 @@ class ProfileFragment : Fragment() {
             if (userDetails != null) {
                 binding.usernameTextView.text = userDetails.name
                 binding.emailTextView.text = userDetails.email
-                Glide.with(this)
-                    .load(userDetails.picture)
-                    .into(binding.profileImageView)
+                val pictureUrl = userDetails.picture
+                if (pictureUrl != null && pictureUrl.isNotEmpty()) {
+                    Glide.with(this)
+                        .load(pictureUrl)
+                        .placeholder(R.drawable.ic_launcher_background)
+                        .error(R.drawable.dummy_art)
+                        .skipMemoryCache(true)  // Menonaktifkan cache memori
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // Menonaktifkan cache disk
+                        .into(binding.profileImageView)
+                }
             }
         }
     }
