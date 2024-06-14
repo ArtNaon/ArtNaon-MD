@@ -34,7 +34,7 @@ class DetailClassificationActivity : AppCompatActivity() {
 
         binding.rvDetailClassSimilarGenre.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        detailClassAdapter = DetailAdapter(images)
+//        detailClassAdapter = DetailAdapter(images)
         binding.rvDetailClassSimilarGenre.adapter = detailClassAdapter
 
         binding.ivDetailClassBack.setOnClickListener {

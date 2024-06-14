@@ -1,5 +1,6 @@
 package com.example.artnaon.ui.view.homegenre
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -7,13 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.ActivityHomeGenreBinding
+import com.example.artnaon.ui.view.detail.DetailActivity
 import com.example.artnaon.ui.view.home.PaintingAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class HomeGenreActivity : AppCompatActivity() {
+class HomeGenreActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityHomeGenreBinding
     private lateinit var paintingAdapter: PaintingAdapter
@@ -33,7 +35,7 @@ class HomeGenreActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        paintingAdapter = PaintingAdapter(emptyList())
+        paintingAdapter = PaintingAdapter(emptyList(), this)
         binding.rvHomeGenre.apply {
             layoutManager = GridLayoutManager(this@HomeGenreActivity, 2)
             adapter = paintingAdapter
@@ -65,5 +67,12 @@ class HomeGenreActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onItemClick(imageUrl: String) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("imageUrl", imageUrl)
+        }
+        startActivity(intent)
     }
 }

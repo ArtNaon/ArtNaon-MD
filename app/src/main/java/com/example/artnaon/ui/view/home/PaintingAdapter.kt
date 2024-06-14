@@ -4,12 +4,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView.OnItemClickListener
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.artnaon.R
 import com.google.android.material.imageview.ShapeableImageView
 
-class PaintingAdapter(private var paintings: List<String?>) : RecyclerView.Adapter<PaintingAdapter.PaintingViewHolder>() {
+class PaintingAdapter(private var paintings: List<String?>, private val itemClickListener: OnItemClickListener) : RecyclerView.Adapter<PaintingAdapter.PaintingViewHolder>() {
 
     class PaintingViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ShapeableImageView = view.findViewById(R.id.iv_item_art)
@@ -28,6 +29,12 @@ class PaintingAdapter(private var paintings: List<String?>) : RecyclerView.Adapt
             .placeholder(R.drawable.dummy_art) // Optional placeholder
             .error(R.drawable.ic_launcher_background) // Optional error image
             .into(holder.imageView)
+
+        holder.itemView.setOnClickListener {
+            paintingUrl?.let { url ->
+                itemClickListener.onItemClick(url)
+            }
+        }
     }
 
     override fun getItemCount(): Int = paintings.size
@@ -35,5 +42,9 @@ class PaintingAdapter(private var paintings: List<String?>) : RecyclerView.Adapt
     fun updateData(newPaintings: List<String?>) {
         paintings = newPaintings
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(imageUrl: String)
     }
 }

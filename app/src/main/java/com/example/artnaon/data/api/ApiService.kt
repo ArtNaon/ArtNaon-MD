@@ -1,5 +1,6 @@
 package com.example.artnaon.data.api
 
+import com.example.artnaon.data.response.DetailResponse
 import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.GenreListResponse
 import com.example.artnaon.data.response.HomeGenreResponse
@@ -84,4 +85,23 @@ interface ApiService {
 
     @POST("genre")
     suspend fun getPaintingsByGenre(@Body request: Map<String, String>): HomeGenreResponse
+
+    @FormUrlEncoded
+    @POST("paintings")
+    suspend fun paintingsDetail(
+        @Field("imageUrl") imageUrl: String
+    ): DetailResponse
+
+    @FormUrlEncoded
+    @POST("likePaintings")
+    suspend fun likePaintings(
+        @Field("email") email: String,
+        @Field("imageUrl") imageUrl: String
+    ): ListPaintingResponse
+
+    @FormUrlEncoded
+    @POST("getLikedPaintings")
+    suspend fun getLikedPaintings(
+        @Field("email") email: String
+    ): ListPaintingResponse
 }

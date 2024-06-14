@@ -2,6 +2,7 @@
 package com.example.artnaon.ui.view.profile.mypost
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -37,21 +38,30 @@ class MyPostActivity : AppCompatActivity() {
 
         binding.rvMainArt.layoutManager = GridLayoutManager(this, 2)
 
+        binding.ivHomeGenreBack.setOnClickListener {
+            finish()
+        }
         setupViewModel()
     }
 
     private fun setupViewModel() {
         mainViewModel.getSession().observe(this) { userModel ->
             userModel?.let {
+                showLoading(true)
                 viewModel.fetchUserDetails(it.email)
             }
         }
 
         viewModel.userDetails.observe(this) { userDetails ->
+            showLoading(false)
             userDetails?.result?.let { paintings ->
                 adapter = MyPostAdapter(paintings)
                 binding.rvMainArt.adapter = adapter
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgMyPost.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

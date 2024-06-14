@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.data.pref.UserPreference
+import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
@@ -123,6 +124,17 @@ class UserRepository(
         return try {
             val response = apiService.userProfile(email)
             response.result
+        } catch (e: HttpException) {
+            val body = e.response()?.errorBody()?.string()
+            throw Exception(body)
+        } catch (e: Throwable) {
+            throw Exception(e.message)
+        }
+    }
+
+    suspend fun likePainting(email: String, imageUrl: String): ListPaintingResponse {
+        return try {
+            apiService.likePaintings(email, imageUrl)
         } catch (e: HttpException) {
             val body = e.response()?.errorBody()?.string()
             throw Exception(body)

@@ -44,13 +44,13 @@
     <string name="create_post">Buat Postingan</string>
     <string name="edt_desc">Tambahkan deskripsi agar semua orang tahu tentang karya seni Anda.</string>
     <string-array name="genre_array">
-        <item>Abstrak</item>
-        <item>Ekspresionisme</item>
-        <item>Neoklasikisme</item>
-        <item>Primitivisme</item>
-        <item>Realisme</item>
-        <item>Romantisisme</item>
-        <item>Simbolisme</item>
+        <item>Abstract</item>
+        <item>Expressionism</item>
+        <item>Neoclassicism</item>
+        <item>Primitivism</item>
+        <item>Realism</item>
+        <item>Romanticism</item>
+        <item>Symbolism</item>
     </string-array>
     <string name="hello_blank_fragment">Halo fragmen kosong</string>
     <string name="title_home">Beranda</string>
@@ -76,4 +76,5 @@
     <string name="terms_policies">Syarat dan Kebijakan</string>
     <string name="or">——— ATAU ———</string>
     <string name="sign_in_with_google">Masuk Dengan Google</string>
+    <string name="select_language">Pilih Bahasa</string>
 </resources>

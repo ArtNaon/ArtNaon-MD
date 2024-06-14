@@ -19,13 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.FragmentHomeBinding
+import com.example.artnaon.ui.view.detail.DetailActivity
 import com.example.artnaon.ui.view.homegenre.HomeGenreActivity
 import com.example.artnaon.ui.view.main.Genre
 import com.example.artnaon.ui.view.main.GenreAdapter
 import com.example.artnaon.ui.view.upload.UploadActivity
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -64,7 +65,7 @@ class HomeFragment : Fragment() {
         // Setup RecyclerView for art
         binding.rvMainArt.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
-            paintingAdapter = PaintingAdapter(emptyList())
+            paintingAdapter = PaintingAdapter(emptyList(), this@HomeFragment)
             adapter = paintingAdapter
         }
     }
@@ -176,5 +177,12 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onItemClick(imageUrl: String) {
+        val intent = Intent(requireContext(), DetailActivity::class.java).apply {
+            putExtra("imageUrl", imageUrl)
+        }
+        startActivity(intent)
     }
 }

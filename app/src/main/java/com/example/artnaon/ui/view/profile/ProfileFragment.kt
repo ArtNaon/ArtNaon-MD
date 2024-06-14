@@ -17,6 +17,7 @@ import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainViewModel
 import com.example.artnaon.ui.view.profile.editprofile.EditProfileActivity
 import com.example.artnaon.ui.view.profile.mypost.MyPostActivity
+import com.example.artnaon.ui.view.profile.save.SaveActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
 import java.util.Locale
 
@@ -51,6 +52,9 @@ class ProfileFragment : Fragment() {
             startActivity(Intent(activity, MyPostActivity::class.java))
         }
 
+        binding.savePostProfile.setOnClickListener {
+            startActivity(Intent(activity, SaveActivity::class.java))
+        }
         binding.editButton.setOnClickListener {
             val intent = Intent(activity, EditProfileActivity::class.java)
             startActivity(intent)

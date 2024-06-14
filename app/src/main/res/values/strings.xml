@@ -50,9 +50,7 @@
         <item>Realism</item>
         <item>Romanticism</item>
         <item>Symbolism</item>
-        </string-array>
-
-
+    </string-array>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_home">Home</string>
