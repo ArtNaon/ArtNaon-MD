@@ -7,6 +7,7 @@ import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
 import com.example.artnaon.data.response.UploadResponse
+import com.example.artnaon.data.response.UserResponse
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,6 +18,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -49,13 +51,14 @@ interface ApiService {
     @POST("user")
     suspend fun userProfile(
         @Field("email") email: String
-    ): LoginResponse
+    ): UserResponse
 
     @FormUrlEncoded
     @POST("userPaintings")
     suspend fun userPaintings(
         @Field("email") email: String
     ): ListPaintingResponse
+
 
     @Multipart
     @POST("upload")
