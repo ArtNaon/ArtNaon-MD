@@ -8,12 +8,17 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.artnaon.data.repository.UserRepository
 import com.example.artnaon.data.response.Result
+import com.example.artnaon.data.response.UserResult
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: UserRepository): ViewModel() {
 
     private val _logoutState = MutableLiveData<Boolean>()
+
+    private val _userDetails = MutableLiveData<UserResult>()
+    val userDetails: LiveData<UserResult> get() = _userDetails
+
     val logoutState: LiveData<Boolean> get() = _logoutState
 
     val themeSetting: LiveData<Boolean> = repository.getThemeSetting().asLiveData()
@@ -34,13 +39,24 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         }
     }
 
+    fun fetchUserDetails(email: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.getUserDetails(email)
+                _userDetails.value = response!!
+            } catch (e: Exception) {
+                // handle error
+            }
+        }
+    }
+
     fun fetchUserPaintings(email: String) {
         viewModelScope.launch {
             try {
-                val response = repository.getUserPaintings(email)
-                _paintings.value = response.result?.filterNotNull() ?: emptyList()
-            } catch (_: Exception) {
-
+                val response = repository.getUserDetails(email)
+                _userDetails.value = response!!
+            } catch (e: Exception) {
+                // handle error
             }
         }
     }

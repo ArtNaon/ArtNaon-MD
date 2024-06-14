@@ -1,7 +1,7 @@
+// MyPostActivity.kt
 package com.example.artnaon.ui.view.profile.mypost
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.artnaon.R
 import com.example.artnaon.databinding.ActivityMyPostBinding
 import com.example.artnaon.ui.ViewModelFactory
-import com.example.artnaon.ui.view.home.PaintingAdapter
 import com.example.artnaon.ui.view.main.MainViewModel
+import com.example.artnaon.ui.view.mypost.MyPostAdapter
 import com.example.artnaon.ui.view.profile.ProfileViewModel
 
 class MyPostActivity : AppCompatActivity() {
 
-    private lateinit var adapter: PaintingAdapter
+    private lateinit var adapter: MyPostAdapter
     private lateinit var binding: ActivityMyPostBinding
     private val viewModel by viewModels<ProfileViewModel> {
         ViewModelFactory.getInstance(this)
@@ -27,7 +27,6 @@ class MyPostActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMyPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -44,14 +43,15 @@ class MyPostActivity : AppCompatActivity() {
     private fun setupViewModel() {
         mainViewModel.getSession().observe(this) { userModel ->
             userModel?.let {
-                viewModel.fetchUserPaintings(it.email)
+                viewModel.fetchUserDetails(it.email)
             }
         }
 
-        viewModel.paintings.observe(this) { paintings ->
-            adapter = PaintingAdapter(paintings)
-            binding.rvMainArt.adapter = adapter
+        viewModel.userDetails.observe(this) { userDetails ->
+            userDetails?.result?.let { paintings ->
+                adapter = MyPostAdapter(paintings)
+                binding.rvMainArt.adapter = adapter
+            }
         }
     }
-
 }

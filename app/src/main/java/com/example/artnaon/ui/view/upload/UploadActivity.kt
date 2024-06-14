@@ -1,3 +1,4 @@
+// UploadActivity.kt
 package com.example.artnaon.ui.view.upload
 
 import android.content.Context
@@ -22,6 +23,7 @@ import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.ActivityUploadBinding
 import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainViewModel
+import com.example.artnaon.ui.view.profile.ProfileViewModel
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -40,7 +42,9 @@ class UploadActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(this)
     }
 
-
+    private val profileViewModel: ProfileViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -123,8 +127,8 @@ class UploadActivity : AppCompatActivity() {
         }
 
         selectedFileUri?.let { uri ->
-            val file = uriToFile(uri, this) // Mengonversi URI ke File
-            val processedFile = file.reduceFileImage() // Mengurangi ukuran gambar
+            val file = uriToFile(uri, this) // Convert URI to File
+            val processedFile = file.reduceFileImage() // Reduce image size
 
             val requestFile = RequestBody.create("image/*".toMediaType(), processedFile)
             val body = MultipartBody.Part.createFormData("painting", processedFile.name, requestFile)
@@ -141,7 +145,8 @@ class UploadActivity : AppCompatActivity() {
                     showLoading(false)
                     if (response.status == "success") {
                         showToast(response.message)
-                        finish()  // Close the activity and return to the previous screen
+                        fetchUserProfile()
+                        finish()
                     } else {
                         showToast("Upload failed: ${response.message}")
                     }
@@ -152,6 +157,10 @@ class UploadActivity : AppCompatActivity() {
                 }
             }
         } ?: showToast("No Image")
+    }
+
+    private fun fetchUserProfile() {
+        profileViewModel.fetchUserDetails(email)
     }
 
     private fun showLoading(isLoading: Boolean) {

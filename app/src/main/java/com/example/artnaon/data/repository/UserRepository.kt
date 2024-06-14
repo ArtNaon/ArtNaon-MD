@@ -1,3 +1,4 @@
+// UserRepository.kt
 package com.example.artnaon.data.repository
 
 import android.util.Log
@@ -5,21 +6,19 @@ import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.data.pref.UserPreference
-import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
+import com.example.artnaon.data.response.UserResult
 import kotlinx.coroutines.flow.Flow
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
 
-class UserRepository (
-
+class UserRepository(
     private val preference: UserPreference,
     private val apiService: ApiService
 ) {
-
 
     suspend fun userSignUp(name: String, email: String, password: String): RegisterResponse {
         return try {
@@ -59,7 +58,7 @@ class UserRepository (
         }
     }
 
-    suspend fun resetPassword (email: String, newPassword: String): ResetPasswordResponse {
+    suspend fun resetPassword(email: String, newPassword: String): ResetPasswordResponse {
         return try {
             apiService.resetPassword(email, newPassword)
         } catch (e: HttpException) {
@@ -99,20 +98,10 @@ class UserRepository (
         preference.saveThemeSetting(isDarkModeActive)
     }
 
-    suspend fun getUserProfile(email: String): LoginResponse {
+    suspend fun getUserDetails(email: String): UserResult? {
         return try {
             val response = apiService.userProfile(email)
-            Log.d("UserRepository", "User profile response: $response")
-            response
-        } catch (e: Exception) {
-            Log.e("UserRepository", "Error fetching user profile", e)
-            throw e
-        }
-    }
-
-    suspend fun getUserPaintings(email: String): ListPaintingResponse {
-        return try {
-            apiService.userPaintings(email)
+            response.result
         } catch (e: HttpException) {
             val body = e.response()?.errorBody()?.string()
             throw Exception(body)
