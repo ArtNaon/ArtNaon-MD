@@ -1,17 +1,20 @@
-// UserRepository.kt
 package com.example.artnaon.data.repository
 
 import android.util.Log
-import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserModel
 import com.example.artnaon.data.pref.UserPreference
 import com.example.artnaon.data.response.ListPaintingResponse
+import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
 import com.example.artnaon.data.response.UserResult
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.HttpException
@@ -32,14 +35,32 @@ class UserRepository(
         }
     }
 
+    suspend fun editProfile(name: String, password: String, picture: MultipartBody.Part?): EditProfileResponse {
+        val email = preference.getSession().first().email
+        val nameBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val passwordBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val emailBody = email.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        val response = apiService.editProfile(emailBody, nameBody, passwordBody, picture)
+
+        val updatedUser = UserModel(
+            name = response.result?.nameEditProfile ?: "",
+            email = email,
+            token = preference.getSession().first().token,
+            isLogin = true,
+            picture = response.result?.pictureEditProfile // Simpan profilePicture
+        )
+        preference.saveSession(updatedUser)
+
+        return response
+    }
+
     suspend fun userSignIn(email: String, password: String): LoginResponse {
         return try {
             val response = apiService.login(email, password)
             val token = response.result?.token ?: ""
             val model = UserModel(name = "", email = email, token = token, isLogin = true)
             saveSession(model)
-            val apiConfig = ApiConfig()
-            apiConfig.setToken(token)
             response
         } catch (e: HttpException) {
             val errorMessage = try {

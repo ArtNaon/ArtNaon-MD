@@ -52,7 +52,6 @@
         <item>Romanticism</item>
         <item>Symbolism</item>
     </string-array>
-
     <string name="hello_blank_fragment">Halo fragmen kosong</string>
     <string name="title_home">Beranda</string>
     <string name="title_camera">Kamera</string>
