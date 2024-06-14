@@ -1,5 +1,6 @@
 package com.example.artnaon.data.api
 
+import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.GenreListResponse
 import com.example.artnaon.data.response.HomeGenreResponse
 import com.example.artnaon.data.response.ListPaintingResponse
@@ -68,6 +69,15 @@ interface ApiService {
         @Part("description") description: RequestBody,
         @Part painting: MultipartBody.Part
     ): UploadResponse
+
+    @Multipart
+    @POST("editProfile")
+    suspend fun editProfile(
+        @Part("email") email: RequestBody,
+        @Part("name") name: RequestBody,
+        @Part("newPassword") password: RequestBody,
+        @Part profilePicture: MultipartBody.Part?
+    ): EditProfileResponse
 
     @GET("genreList")
     suspend fun getGenres(): GenreListResponse
