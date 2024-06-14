@@ -16,6 +16,7 @@ import com.example.artnaon.databinding.FragmentProfileBinding
 import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.main.MainViewModel
 import com.example.artnaon.ui.view.profile.mypost.MyPostActivity
+import com.example.artnaon.ui.view.profile.save.SaveActivity
 import com.example.artnaon.ui.view.welcome.WelcomeActivity
 import java.util.Locale
 
@@ -48,6 +49,10 @@ class ProfileFragment : Fragment() {
 
         binding.myPostProfile.setOnClickListener {
             startActivity(Intent(activity, MyPostActivity::class.java))
+        }
+
+        binding.savePostProfile.setOnClickListener {
+            startActivity(Intent(activity, SaveActivity::class.java))
         }
     }
 

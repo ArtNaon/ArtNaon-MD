@@ -24,7 +24,7 @@
             android:name=".ui.view.reset.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.save.SaveActivity"
+            android:name=".ui.view.profile.save.SaveActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.upload.UploadActivity"

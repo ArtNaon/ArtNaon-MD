@@ -44,15 +44,12 @@
         <!-- Other strings -->
     <string-array name="genre_array">
         <item>Abstract</item>
-        <item>Cubist</item>
-        <item>Expressionist</item>
-        <item>Impressionist</item>
-        <item>Landscape</item>
-        <item>Pop Art</item>
-        <item>Portrait</item>
-        <item>Realist</item>
-        <item>Still Life</item>
-        <item>Surrealist</item>
+        <item>Expressionism</item>
+        <item>Neoclassicism</item>
+        <item>Primitivism</item>
+        <item>Realism</item>
+        <item>Romanticism</item>
+        <item>Symbolism</item>
     </string-array>
 
 
