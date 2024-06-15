@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -38,15 +39,21 @@ class EditProfileActivity : AppCompatActivity() {
             openGallery()
         }
 
+        binding.backButton.setOnClickListener {
+            finish()
+        }
+
         binding.changeButton.setOnClickListener {
             val name = binding.edtUsernameEditProfile.text.toString().trim()
             val password = binding.edtPassword.text.toString().trim()
             val picturePart = selectedImageFile?.let { convertFileToMultipart(it) }
 
+            showLoading(true)
             viewModel.editProfile(name, password, picturePart)
         }
 
         viewModel.editProfileResult.observe(this) { result ->
+            showLoading(false)
             if (result != null && result.status == "success") {
                 binding.edtUsernameEditProfile.setText(result.result?.nameEditProfile)
                 val pictureUrl = result.result?.pictureEditProfile
@@ -59,9 +66,13 @@ class EditProfileActivity : AppCompatActivity() {
                 } else {
                     Log.e("EditProfileActivity", "Picture URL is null or 'Nothing is changed'")
                 }
+                val resultIntent = Intent()
+                setResult(Activity.RESULT_OK, resultIntent)
+                finish()
             } else {
                 Log.e("EditProfileActivity", "Edit Profile Failed: ${result?.message}")
             }
+
         }
     }
 
@@ -81,5 +92,9 @@ class EditProfileActivity : AppCompatActivity() {
     private fun convertFileToMultipart(file: File): MultipartBody.Part {
         val requestBody = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("profilePicture", file.name, requestBody)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgEditPost.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
