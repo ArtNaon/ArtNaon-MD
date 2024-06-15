@@ -2,6 +2,7 @@ package com.example.artnaon.ui.view.detail
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 
@@ -16,6 +17,7 @@ import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserPreference
 import com.example.artnaon.data.pref.dataStore
 import com.example.artnaon.data.response.DetailResult
+import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.Result
 import com.example.artnaon.databinding.ActivityDetailBinding
 import com.example.artnaon.ui.view.home.PaintingAdapter
@@ -34,7 +36,7 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
     private lateinit var apiService: ApiService
     private lateinit var apiConfig: ApiConfig
     private lateinit var userPreference: UserPreference
-    private var isSaved: Boolean = false // Variable to track save status
+    private var isSaved: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,15 +129,19 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         }
     }
 
+    private fun logResponse(response: ListPaintingResponse) {
+        Log.d("API Response", "Status: ${response.status}, Message: ${response.message}, Result: ${response.result}")
+    }
+
     private fun checkAndSavePainting(imageUrl: String) {
         showLoading(true)
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val userSession = userPreference.getSession().first()
                 val email = userSession.email
-                val username = userSession.name
 
                 val likedPaintingsResponse = apiService.getLikedPaintings(email)
+                logResponse(likedPaintingsResponse)
                 val likedPaintings = likedPaintingsResponse.result ?: emptyList()
 
                 withContext(Dispatchers.Main) {
@@ -143,7 +149,7 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
                     if (likedPaintings.contains(imageUrl)) {
                         Toast.makeText(this@DetailActivity, "Sorry, the photo has already been saved.", Toast.LENGTH_SHORT).show()
                     } else {
-                        savePainting(email, imageUrl, username)
+                        savePainting(email, imageUrl, userSession.name)
                     }
                 }
             } catch (e: Exception) {

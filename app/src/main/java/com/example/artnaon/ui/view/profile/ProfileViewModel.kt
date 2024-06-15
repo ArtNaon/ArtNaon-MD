@@ -48,9 +48,10 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         viewModelScope.launch {
             try {
                 val response = repository.getUserDetails(email)
+                Log.d("ProfileViewModel", "User details fetched: $response")
                 _userDetails.value = response!!
             } catch (e: Exception) {
-                // handle error
+                Log.e("ProfileViewModel", "Error fetching user details", e)
             }
         }
     }

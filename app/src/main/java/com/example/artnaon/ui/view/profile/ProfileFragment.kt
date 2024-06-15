@@ -1,5 +1,6 @@
 package com.example.artnaon.ui.view.profile
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -57,7 +58,18 @@ class ProfileFragment : Fragment() {
         }
         binding.editButton.setOnClickListener {
             val intent = Intent(activity, EditProfileActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            mainViewModel.getSession().observe(viewLifecycleOwner) { userModel ->
+                if (userModel != null) {
+                    viewModel.fetchUserDetails(userModel.email)
+                }
+            }
         }
     }
 
@@ -140,5 +152,9 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireContext(), requireActivity()::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    companion object {
+        private const val EDIT_PROFILE_REQUEST_CODE = 1
     }
 }
