@@ -15,10 +15,9 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class ProfileViewModel(private val repository: UserRepository): ViewModel() {
+class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val _logoutState = MutableLiveData<Boolean>()
-
     private val _editProfileResult = MutableLiveData<EditProfileResponse>()
     val editProfileResult: LiveData<EditProfileResponse> get() = _editProfileResult
 
@@ -26,11 +25,13 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     val userDetails: LiveData<UserResult> get() = _userDetails
 
     val logoutState: LiveData<Boolean> get() = _logoutState
-
     val themeSetting: LiveData<Boolean> = repository.getThemeSetting().asLiveData()
 
     private val _paintings = MutableLiveData<List<String>>()
     val paintings: LiveData<List<String>> = _paintings
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun logout() {
         viewModelScope.launch {
@@ -46,13 +47,15 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
     }
 
     fun fetchUserDetails(email: String) {
+        _isLoading.value = true
         viewModelScope.launch {
             try {
                 val response = repository.getUserDetails(email)
-                Log.d("ProfileViewModel", "User details fetched: $response")
                 _userDetails.value = response!!
             } catch (e: Exception) {
                 Log.e("ProfileViewModel", "Error fetching user details", e)
+            } finally {
+                _isLoading.value = false
             }
         }
     }
@@ -65,17 +68,6 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
             } catch (e: Exception) {
                 // Handle error
             }
-
-            fun fetchUserPaintings(email: String) {
-                viewModelScope.launch {
-                    try {
-                        val response = repository.getUserDetails(email)
-                        _userDetails.value = response!!
-                    } catch (e: Exception) {
-                        // handle error
-                    }
-                }
-            }
         }
     }
 
@@ -83,3 +75,4 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
         return repository.deletePainting(paintingUrl)
     }
 }
+

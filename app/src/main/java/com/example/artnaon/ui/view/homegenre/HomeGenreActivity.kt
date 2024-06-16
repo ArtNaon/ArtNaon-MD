@@ -3,6 +3,7 @@ package com.example.artnaon.ui.view.homegenre
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,25 +49,30 @@ class HomeGenreActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListen
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                showLoading(true)
                 val response = apiService.getPaintingsByGenre(mapOf("genre" to genre))
-                if (response.status == "success") {
-                    val paintings = response.data ?: emptyList()
-                    withContext(Dispatchers.Main) {
+                withContext(Dispatchers.Main) {
+                    showLoading(false)
+                    if (response.status == "success") {
+                        val paintings = response.data ?: emptyList()
                         paintingAdapter.updateData(paintings)
                         binding.tvHomeGenreName.text = genre
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
+                    } else {
                         Toast.makeText(this@HomeGenreActivity, response.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
                 Log.e("HomeGenreActivity", "Error fetching paintings", e)
                 withContext(Dispatchers.Main) {
+                    showLoading(false)
                     Toast.makeText(this@HomeGenreActivity, "Failed to load paintings", Toast.LENGTH_SHORT).show()
                 }
             }
         }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgHomeGenre.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun onItemClick(imageUrl: String) {

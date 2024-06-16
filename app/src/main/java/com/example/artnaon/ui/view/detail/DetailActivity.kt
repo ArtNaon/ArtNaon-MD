@@ -80,6 +80,14 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
             val userSession = runBlocking { userPreference.getSession().first() }
             savePainting(userSession.email, imageUrl, userSession.name)
         }
+
+        binding.btnDetailDownload.setOnClickListener {
+            downloadImage(imageUrl)
+        }
+
+        binding.ivDetailShare.setOnClickListener {
+            shareImage(imageUrl)
+        }
     }
 
     private fun savePainting(email: String, imageUrl: String, username: String) {
@@ -111,14 +119,6 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
                     Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
-
-        binding.btnDetailDownload.setOnClickListener {
-            downloadImage(imageUrl)
-        }
-
-        binding.ivDetailShare.setOnClickListener {
-            shareImage(imageUrl)
         }
     }
 
@@ -184,6 +184,7 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
     }
 
     private fun downloadImage(imageUrl: String) {
+        showLoading(true)
         val request = DownloadManager.Request(Uri.parse(imageUrl))
             .setTitle("Downloading image")
             .setDescription("Downloading image from $imageUrl")
@@ -195,20 +196,23 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadManager.enqueue(request)
 
+        showLoading(false)
         Toast.makeText(this, "Downloading image...", Toast.LENGTH_SHORT).show()
     }
 
     private fun shareImage(imageUrl: String) {
+        showLoading(true)
         Glide.with(this)
             .asBitmap()
             .load(imageUrl)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                     shareBitmap(resource, imageUrl)
+                    showLoading(false)
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
-
+                    showLoading(false)
                 }
             })
     }
@@ -245,5 +249,4 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         }
         startActivity(intent)
     }
-
 }

@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.view.upload.UploadActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -52,7 +53,7 @@
         android:layout_marginTop="16dp"
         android:contentDescription="@string/image_desc"
         android:scaleType="centerCrop"
-        android:src="@drawable/dummy_art"
+        android:src="@drawable/upload_your_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_upload" />
@@ -78,6 +79,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:entries="@array/genre_array"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_upload_genre" />
 
@@ -116,7 +119,6 @@
             android:hint="@string/edt_desc"
             android:inputType="textMultiLine"
             android:labelFor="@+id/edt_desc"
-            android:lines="4"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:scrollHorizontally="false"
@@ -153,8 +155,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_upload" />
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressIndicator"
+    <ProgressBar
+        android:id="@+id/pg_upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"

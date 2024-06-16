@@ -3,11 +3,14 @@ package com.example.artnaon.ui.view.profile
 import android.app.Activity
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
@@ -60,7 +63,50 @@ class ProfileFragment : Fragment() {
             val intent = Intent(activity, EditProfileActivity::class.java)
             startActivityForResult(intent, EDIT_PROFILE_REQUEST_CODE)
         }
+
+        binding.termsLayout.setOnClickListener {
+            showConfirmationDialog(
+                "https://github.com/ArtNaon/ArtNaon-MD/blob/1568e48f267716b23caab8de70aac8745f128979/Terms%20of%20Service%20(ToS).md",
+                "Are you sure you want to open the Terms of Service?"
+            )
+        }
+
+        binding.aboutLayout.setOnClickListener {
+            showConfirmationDialog(
+                "https://github.com/ArtNaon/ArtNaon-MD/blob/1568e48f267716b23caab8de70aac8745f128979/About.md",
+                "Are you sure you want to open the About page?"
+            )
+        }
+
+        binding.suggetLayout.setOnClickListener {
+            showConfirmationDialog(
+                "mailto:artnaon07@gmail.com?subject=Suggestions%20for%20Improving%20ArtNaon",
+                "Are you sure you want to send an email suggestion?"
+            )
+        }
     }
+
+    private fun showConfirmationDialog(url: String, message: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Open Link")
+            .setMessage(message)
+            .setPositiveButton("Yes") { dialog, _ ->
+                openLink(url)
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun openLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(url)
+        startActivity(intent)
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -80,6 +126,10 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            showLoading(isLoading)
+        }
+
         viewModel.userDetails.observe(viewLifecycleOwner) { userDetails ->
             if (userDetails != null) {
                 binding.usernameTextView.text = userDetails.name
@@ -88,8 +138,8 @@ class ProfileFragment : Fragment() {
                 if (pictureUrl != null && pictureUrl.isNotEmpty()) {
                     Glide.with(this)
                         .load(pictureUrl)
-                        .placeholder(R.drawable.ic_launcher_background)
-                        .error(R.drawable.dummy_art)
+                        .placeholder(R.drawable.baseline_person_off_24)
+                        .error(R.drawable.baseline_person_off_24)
                         .skipMemoryCache(true)  // Menonaktifkan cache memori
                         .diskCacheStrategy(DiskCacheStrategy.NONE)  // Menonaktifkan cache disk
                         .into(binding.profileImageView)
@@ -152,6 +202,10 @@ class ProfileFragment : Fragment() {
         val intent = Intent(requireContext(), requireActivity()::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgProfile.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

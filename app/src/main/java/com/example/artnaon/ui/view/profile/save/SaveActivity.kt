@@ -2,6 +2,7 @@ package com.example.artnaon.ui.view.profile.save
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -14,11 +15,9 @@ import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.api.ApiService
 import com.example.artnaon.data.pref.UserPreference
 import com.example.artnaon.data.pref.dataStore
-import com.example.artnaon.databinding.ActivityHomeGenreBinding
 import com.example.artnaon.databinding.ActivitySaveBinding
 import com.example.artnaon.ui.view.detail.DetailActivity
 import com.example.artnaon.ui.view.home.PaintingAdapter
-import com.example.artnaon.ui.view.main.ArtAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -78,17 +77,18 @@ class SaveActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
             } catch (e: HttpException) {
                 withContext(Dispatchers.Main) {
                     showLoading(false)
-                    if (e.code() == 400) {
-                        Toast.makeText(this@SaveActivity, "No liked paintings found", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@SaveActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+                    when (e.code()) {
+                        400 -> Toast.makeText(this@SaveActivity, "No liked paintings found", Toast.LENGTH_SHORT).show()
+                        else -> Toast.makeText(this@SaveActivity, "No liked paintings found", Toast.LENGTH_SHORT).show()
                     }
                 }
+                Log.e("SaveActivity", "HTTP error occurred", e)
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     showLoading(false)
                     Toast.makeText(this@SaveActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
+                Log.e("SaveActivity", "Non-HTTP error occurred", e)
             }
         }
     }

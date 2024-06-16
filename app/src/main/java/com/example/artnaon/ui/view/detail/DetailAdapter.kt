@@ -27,8 +27,8 @@ class DetailAdapter(
         val imageUrl = images[position]
         Glide.with(holder.itemView.context)
             .load(imageUrl)
-            .placeholder(R.drawable.dummy_art)
-            .error(R.drawable.ic_launcher_background)
+            .placeholder(R.drawable.no_image_found)
+            .error(R.drawable.no_image_found)
             .into(holder.binding.ivItemDetailArt)
 
         holder.itemView.setOnClickListener {

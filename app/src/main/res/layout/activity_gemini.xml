@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:context=".ui.view.chatbot.GeminiActivity">
 
@@ -12,7 +13,7 @@
         android:id="@+id/layout_gemini"
         android:layout_width="match_parent"
         android:layout_height="61dp"
-        android:background="@color/white"
+        android:background="@color/colorTosca"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +34,7 @@
             android:id="@+id/tv_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/artnaon_bot"
             app:layout_constraintTop_toTopOf="parent"

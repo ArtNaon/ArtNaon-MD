@@ -60,8 +60,8 @@ class EditProfileActivity : AppCompatActivity() {
                 if (pictureUrl != null && pictureUrl != "Nothing is changed") {
                     Glide.with(this)
                         .load(pictureUrl)
-                        .placeholder(R.drawable.dummy_art)
-                        .error(R.drawable.ic_launcher_background)
+                        .placeholder(R.drawable.no_image_found)
+                        .error(R.drawable.no_image_found)
                         .into(binding.profileImageView)
                 } else {
                     Log.e("EditProfileActivity", "Picture URL is null or 'Nothing is changed'")
