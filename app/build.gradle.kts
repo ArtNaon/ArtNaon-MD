@@ -18,6 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"https://backend-2qimicuoja-et.a.run.app/\"")
+        buildConfigField("String", "GEMINI_API_KEY", "\"AIzaSyAvxsoFfwxdJcwFG_JX2xA0AajyYwB29js\"")
     }
 
     buildTypes {
@@ -79,11 +80,9 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.4.1")
     implementation ("androidx.databinding:databinding-runtime:7.1.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation (libs.guava)
     implementation("androidx.exifinterface:exifinterface:1.3.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
-
-
 
     //api
     implementation(libs.retrofit2.retrofit)
@@ -96,6 +95,7 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation (libs.androidx.lifecycle.extensions)
 
-    //firebase auth
-
+    //gemini
+    implementation(libs.generativeai)
+    implementation (libs.gson)
 }

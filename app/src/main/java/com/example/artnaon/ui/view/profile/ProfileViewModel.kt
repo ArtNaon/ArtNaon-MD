@@ -8,6 +8,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.artnaon.data.repository.UserRepository
 import com.example.artnaon.data.response.EditProfileResponse
+import com.example.artnaon.data.response.ListPaintingResponse
 import com.example.artnaon.data.response.Result
 import com.example.artnaon.data.response.UserResult
 import kotlinx.coroutines.flow.firstOrNull
@@ -76,5 +77,9 @@ class ProfileViewModel(private val repository: UserRepository): ViewModel() {
                 }
             }
         }
+    }
+
+    suspend fun deletePainting(paintingUrl: String): ListPaintingResponse {
+        return repository.deletePainting(paintingUrl)
     }
 }

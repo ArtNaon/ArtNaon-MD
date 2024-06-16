@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 
 class SaveActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
 
@@ -64,7 +65,7 @@ class SaveActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
             try {
                 val userSession = userPreference.getSession().first()
                 val email = userSession.email
-                val response = apiService.getLikedPaintings(email)
+                val response = apiService.getLikedPaintings(mapOf("email" to email))
                 withContext(Dispatchers.Main) {
                     showLoading(false)
                     if (response.status == "success") {
@@ -72,6 +73,15 @@ class SaveActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
                         saveAdapter.updateData(paintings)
                     } else {
                         Toast.makeText(this@SaveActivity, "Failed to load liked paintings.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: HttpException) {
+                withContext(Dispatchers.Main) {
+                    showLoading(false)
+                    if (e.code() == 400) {
+                        Toast.makeText(this@SaveActivity, "No liked paintings found", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@SaveActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {
@@ -94,3 +104,4 @@ class SaveActivity : AppCompatActivity(), PaintingAdapter.OnItemClickListener {
         binding.pgSave.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
+

@@ -1,5 +1,9 @@
 package com.example.artnaon.ui.view.camera
 
+import android.net.Uri
+import android.os.Bundle
+import android.widget.ImageView
+
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -18,6 +22,12 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.artnaon.R
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.artnaon.data.api.ApiConfig
@@ -82,6 +92,23 @@ class CameraActivity : AppCompatActivity() {
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+
+            val preview = Preview.Builder().build().also {
+                it.setSurfaceProvider(viewFinder.surfaceProvider)
+            }
+
+            imageCapture = ImageCapture.Builder().build()
+
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                cameraProvider.unbindAll()
+                cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview, imageCapture
+                )
+            } catch (exc: Exception) {
+                // Handle exception
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
 
             val preview = Preview.Builder()
@@ -113,6 +140,26 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun takePhoto() {
+        val photoFile = File(outputDirectory, "${System.currentTimeMillis()}.jpg")
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imageCapture.takePicture(
+            outputOptions, ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = output.savedUri ?: Uri.fromFile(photoFile)
+                    // Panggil fungsi untuk mengirim gambar ke model klasifikasi di sini
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    // Handle exception
+                }
+            }
+        )
+    }
+
+    private fun getOutputDirectory(): File {
+        val mediaDir = externalMediaDirs.firstOrNull()?.let {
+            File(it, resources.getString(R.string.app_name)).apply { mkdirs() }
         val imageCapture = imageCapture ?: return
 
         val photoFile = createCustomTempFile(application)
@@ -234,5 +281,11 @@ class CameraActivity : AppCompatActivity() {
                 finish()
             }
         }
+        return if (mediaDir != null && mediaDir.exists()) mediaDir else filesDir
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        cameraExecutor.shutdown()
     }
 }

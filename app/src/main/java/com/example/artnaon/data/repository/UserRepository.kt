@@ -10,6 +10,8 @@ import com.example.artnaon.data.response.LoginResponse
 import com.example.artnaon.data.response.RegisterResponse
 import com.example.artnaon.data.response.ResetPasswordResponse
 import com.example.artnaon.data.response.UserResult
+import com.example.artnaon.ui.view.chatbot.GeminiAI
+import com.google.ai.client.generativeai.java.ChatFutures
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -132,15 +134,17 @@ class UserRepository(
         }
     }
 
-    suspend fun likePainting(email: String, imageUrl: String): ListPaintingResponse {
-        return try {
-            apiService.likePaintings(email, imageUrl)
-        } catch (e: HttpException) {
-            val body = e.response()?.errorBody()?.string()
-            throw Exception(body)
-        } catch (e: Throwable) {
-            throw Exception(e.message)
-        }
+    suspend fun deletePainting(paintingUrl: String): ListPaintingResponse {
+        val requestBody = mapOf("imageUrl" to paintingUrl)
+        return apiService.deletePainting(requestBody)
+    }
+
+    fun getChatFutures(): ChatFutures {
+        return GeminiAI.getModelGemini().startChat()
+    }
+
+    fun sendMessageToGemini(chatFutures: ChatFutures, message: String, callback: (Result<String>) -> Unit) {
+        GeminiAI.getResponse(chatFutures, message, callback)
     }
 
     companion object {

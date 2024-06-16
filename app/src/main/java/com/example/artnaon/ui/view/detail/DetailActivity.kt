@@ -32,7 +32,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import retrofit2.HttpException
 import java.io.File
 import java.io.FileOutputStream
 
@@ -75,7 +77,40 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         }
 
         binding.btnDetailSave.setOnClickListener {
-            checkAndSavePainting(imageUrl)
+            val userSession = runBlocking { userPreference.getSession().first() }
+            savePainting(userSession.email, imageUrl, userSession.name)
+        }
+    }
+
+    private fun savePainting(email: String, imageUrl: String, username: String) {
+        showLoading(true)
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiService.likePaintings(mapOf("email" to email, "imageUrl" to imageUrl))
+                withContext(Dispatchers.Main) {
+                    showLoading(false)
+                    if (response.status == "success") {
+                        isSaved = true
+                        Toast.makeText(this@DetailActivity, "User $username has saved the photo.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@DetailActivity, "Failed to save the photo.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: HttpException) {
+                withContext(Dispatchers.Main) {
+                    showLoading(false)
+                    if (e.code() == 400) {
+                        Toast.makeText(this@DetailActivity, "Painting already liked", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    showLoading(false)
+                    Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         binding.btnDetailDownload.setOnClickListener {
@@ -144,59 +179,8 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         }
     }
 
-    private fun logResponse(response: ListPaintingResponse) {
-        Log.d("API Response", "Status: ${response.status}, Message: ${response.message}, Result: ${response.result}")
-    }
-
-    private fun checkAndSavePainting(imageUrl: String) {
-        showLoading(true)
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val userSession = userPreference.getSession().first()
-                val email = userSession.email
-
-                val likedPaintingsResponse = apiService.getLikedPaintings(email)
-                logResponse(likedPaintingsResponse)
-                val likedPaintings = likedPaintingsResponse.result ?: emptyList()
-
-                withContext(Dispatchers.Main) {
-                    showLoading(false)
-                    if (likedPaintings.contains(imageUrl)) {
-                        Toast.makeText(this@DetailActivity, "Sorry, the photo has already been saved.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        savePainting(email, imageUrl, userSession.name)
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    showLoading(false)
-                    Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-    private fun savePainting(email: String, imageUrl: String, username: String) {
-        showLoading(true)
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val response = apiService.likePaintings(email, imageUrl)
-                withContext(Dispatchers.Main) {
-                    showLoading(false)
-                    if (response.status == "success") {
-                        isSaved = true
-                        Toast.makeText(this@DetailActivity, "User $username has saved the photo.", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@DetailActivity, "Failed to save the photo.", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    showLoading(false)
-                    Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
+    private fun showLoading(isLoading: Boolean) {
+        binding.pgDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun downloadImage(imageUrl: String) {
@@ -262,7 +246,4 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         startActivity(intent)
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.pgDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
 }
