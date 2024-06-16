@@ -100,16 +100,12 @@ interface ApiService {
         @Field("imageUrl") imageUrl: String
     ): DetailResponse
 
-    @FormUrlEncoded
     @POST("likePaintings")
-    suspend fun likePaintings(
-        @Field("email") email: String,
-        @Field("imageUrl") imageUrl: String
-    ): ListPaintingResponse
+    suspend fun likePaintings(@Body requestBody: Map<String, String>): ListPaintingResponse
 
-    @FormUrlEncoded
     @POST("getLikedPaintings")
-    suspend fun getLikedPaintings(
-        @Field("email") email: String
-    ): ListPaintingResponse
+    suspend fun getLikedPaintings(@Body requestBody: Map<String, String>): ListPaintingResponse
+
+    @POST("delete")
+    suspend fun deletePainting(@Body requestBody: Map<String, String>): ListPaintingResponse
 }

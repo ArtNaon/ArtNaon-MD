@@ -146,28 +146,40 @@ class CameraActivity : AppCompatActivity() {
 
         Log.d(TAG, "classifyImage: Mengirim permintaan klasifikasi gambar")
 
-        ApiConfig().getApiService().classifyImage(body).enqueue(object : Callback<ClassifyResponse> {
-            override fun onResponse(call: Call<ClassifyResponse>, response: Response<ClassifyResponse>) {
-                if (response.isSuccessful) {
-                    val result = response.body()?.result
-                    Log.d(TAG, "onResponse: Klasifikasi berhasil, hasil: $result")
-                    result?.let {
-                        val intent = Intent(this@CameraActivity, DetailClassificationActivity::class.java)
-                        intent.putExtra("result", it)
-                        intent.putExtra("imageUri", imageUri.toString())
-                        startActivity(intent)
+        ApiConfig().getApiService().classifyImage(body)
+            .enqueue(object : Callback<ClassifyResponse> {
+                override fun onResponse(
+                    call: Call<ClassifyResponse>,
+                    response: Response<ClassifyResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        val result = response.body()?.result
+                        Log.d(TAG, "onResponse: Klasifikasi berhasil, hasil: $result")
+                        result?.let {
+                            val intent = Intent(
+                                this@CameraActivity,
+                                DetailClassificationActivity::class.java
+                            )
+                            intent.putExtra("result", it)
+                            intent.putExtra("imageUri", imageUri.toString())
+                            startActivity(intent)
+                        }
+                    } else {
+                        Log.e(TAG, "onResponse: Klasifikasi gagal")
+                        Toast.makeText(this@CameraActivity, "Klasifikasi gagal", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                } else {
-                    Log.e(TAG, "onResponse: Klasifikasi gagal")
-                    Toast.makeText(this@CameraActivity, "Klasifikasi gagal", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<ClassifyResponse>, t: Throwable) {
-                Log.e(TAG, "onFailure: Gagal menghubungi server", t)
-                Toast.makeText(this@CameraActivity, "Gagal menghubungi server", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<ClassifyResponse>, t: Throwable) {
+                    Log.e(TAG, "onFailure: Gagal menghubungi server", t)
+                    Toast.makeText(
+                        this@CameraActivity,
+                        "Gagal menghubungi server",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
     }
 
     private fun createCustomTempFile(context: Context): File {
@@ -230,7 +242,8 @@ class CameraActivity : AppCompatActivity() {
             if (allPermissionsGranted()) {
                 startCamera()
             } else {
-                Toast.makeText(this, "Izin tidak diberikan oleh pengguna.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Izin tidak diberikan oleh pengguna.", Toast.LENGTH_SHORT)
+                    .show()
                 finish()
             }
         }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.FragmentHomeBinding
+import com.example.artnaon.ui.view.chatbot.GeminiActivity
 import com.example.artnaon.ui.view.detail.DetailActivity
 import com.example.artnaon.ui.view.homegenre.HomeGenreActivity
 import com.example.artnaon.ui.view.main.Genre
@@ -67,6 +68,10 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
             layoutManager = GridLayoutManager(requireContext(), 2)
             paintingAdapter = PaintingAdapter(emptyList(), this@HomeFragment)
             adapter = paintingAdapter
+        }
+
+        binding.fbHomeChatBot.setOnClickListener {
+            startActivity(Intent(requireContext(), GeminiActivity::class.java))
         }
     }
 

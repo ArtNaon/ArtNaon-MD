@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.artnaon.data.di.Injection
 import com.example.artnaon.data.repository.UserRepository
+import com.example.artnaon.ui.view.chatbot.GeminiViewModel
 import com.example.artnaon.ui.view.main.MainViewModel
 import com.example.artnaon.ui.view.profile.ProfileViewModel
 import com.example.artnaon.ui.view.reset.ResetPasswordViewModel
@@ -38,6 +39,10 @@ class ViewModelFactory(private val repository: UserRepository) :
 
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(GeminiViewModel::class.java) -> {
+                GeminiViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
