@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.databinding.ActivityMainBinding
@@ -17,7 +16,7 @@ import com.example.artnaon.ui.ViewModelFactory
 import com.example.artnaon.ui.view.camera.CameraActivity
 import com.example.artnaon.ui.view.profile.ProfileViewModel
 import com.example.artnaon.ui.view.splash.SplashActivity
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,16 +37,25 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navView: BottomNavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        navView.setupWithNavController(navController)
-        setupAction()
+        setupNavigation()
         setupSwitchMode()
+        setupAction()
 
         binding.buttonAdd.setOnClickListener {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun setupNavigation() {
+        val navView: ChipNavigationBar = binding.navView
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+
+        navView.setOnItemSelectedListener { id ->
+            when (id) {
+                R.id.navigation_home -> navController.navigate(R.id.navigation_home)
+                R.id.navigation_profile -> navController.navigate(R.id.navigation_profile)
+            }
         }
     }
 
@@ -64,17 +72,14 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.S)
     private fun setupAction() {
-
         viewModel.getSession().observe(this) {
-            val apiConfig = ApiConfig()
-
             if (!it.isLogin) {
                 val intent = Intent(this, SplashActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 startActivity(intent)
                 finish()
             } else {
-                apiConfig.setToken(it.token)
+                ApiConfig().setToken(it.token)
             }
         }
     }
