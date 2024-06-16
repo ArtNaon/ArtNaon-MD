@@ -1,16 +1,25 @@
 package com.example.artnaon.ui.view.detail
 
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.datastore.core.IOException
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.artnaon.R
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.api.ApiService
@@ -18,16 +27,14 @@ import com.example.artnaon.data.pref.UserPreference
 import com.example.artnaon.data.pref.dataStore
 import com.example.artnaon.data.response.DetailResult
 import com.example.artnaon.data.response.ListPaintingResponse
-import com.example.artnaon.data.response.Result
 import com.example.artnaon.databinding.ActivityDetailBinding
-import com.example.artnaon.ui.view.home.PaintingAdapter
-import com.example.artnaon.ui.view.main.ArtAdapter
-import com.example.artnaon.ui.view.main.GenreAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
 
 class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
 
@@ -69,6 +76,14 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
 
         binding.btnDetailSave.setOnClickListener {
             checkAndSavePainting(imageUrl)
+        }
+
+        binding.btnDetailDownload.setOnClickListener {
+            downloadImage(imageUrl)
+        }
+
+        binding.ivDetailShare.setOnClickListener {
+            shareImage(imageUrl)
         }
     }
 
@@ -184,6 +199,62 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         }
     }
 
+    private fun downloadImage(imageUrl: String) {
+        val request = DownloadManager.Request(Uri.parse(imageUrl))
+            .setTitle("Downloading image")
+            .setDescription("Downloading image from $imageUrl")
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+            .setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, "downloaded_image_${System.currentTimeMillis()}.jpg")
+
+        val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        downloadManager.enqueue(request)
+
+        Toast.makeText(this, "Downloading image...", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun shareImage(imageUrl: String) {
+        Glide.with(this)
+            .asBitmap()
+            .load(imageUrl)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    shareBitmap(resource, imageUrl)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+
+                }
+            })
+    }
+
+    private fun shareBitmap(bitmap: Bitmap, imageUrl: String) {
+        val filename = "shared_image_${System.currentTimeMillis()}.jpg"
+        val file = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), filename)
+        try {
+            val out = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+            out.flush()
+            out.close()
+            val uri = FileProvider.getUriForFile(this, "$packageName.fileprovider", file)
+            shareUri(uri, imageUrl)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Toast.makeText(this, "Failed to share image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun shareUri(uri: Uri, imageUrl: String) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "image/jpeg"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_TEXT, "Check out this painting: $imageUrl")
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+        }
+        startActivity(Intent.createChooser(intent, "Share image via"))
+    }
+
     override fun onItemClick(imageUrl: String) {
         val intent = Intent(this, DetailActivity::class.java).apply {
             putExtra("imageUrl", imageUrl)
@@ -195,4 +266,3 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
         binding.pgDetail.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
-

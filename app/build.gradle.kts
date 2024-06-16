@@ -66,9 +66,11 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     val cameraxVersion = "1.3.0"
+    implementation("com.google.guava:guava:31.1-jre")
     implementation("androidx.camera:camera-camera2:$cameraxVersion")
     implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
     implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("androidx.camera:camera-extensions:$cameraxVersion")
     implementation("androidx.exifinterface:exifinterface:1.3.6")
     implementation ("com.google.android.material:material:1.4.0")
     implementation ("com.github.bumptech.glide:glide:4.12.0")
@@ -77,6 +79,9 @@ dependencies {
     implementation ("androidx.fragment:fragment-ktx:1.4.1")
     implementation ("androidx.databinding:databinding-runtime:7.1.2")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+    implementation("androidx.exifinterface:exifinterface:1.3.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+
 
 
 
