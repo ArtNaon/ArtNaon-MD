@@ -1,5 +1,6 @@
 package com.example.artnaon.data.api
 
+import com.example.artnaon.data.response.ClassifyResponse
 import com.example.artnaon.data.response.DetailResponse
 import com.example.artnaon.data.response.EditProfileResponse
 import com.example.artnaon.data.response.GenreListResponse
@@ -13,6 +14,7 @@ import com.example.artnaon.data.response.UserResponse
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -79,6 +81,12 @@ interface ApiService {
         @Part("newPassword") password: RequestBody,
         @Part profilePicture: MultipartBody.Part?
     ): EditProfileResponse
+
+    @Multipart
+    @POST("classifyPaintings")
+    fun classifyImage(
+        @Part image: MultipartBody.Part
+    ): Call<ClassifyResponse>
 
     @GET("genreList")
     suspend fun getGenres(): GenreListResponse

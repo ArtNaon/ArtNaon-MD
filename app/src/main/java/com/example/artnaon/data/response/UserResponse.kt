@@ -29,6 +29,6 @@ data class UserResult(
 	val picture: String? = null,
 
 	@field:SerializedName("paintings")
-	val paintings: List<String>? = null // List of painting URLs
+	val paintings: List<String>? = null
 
 )
