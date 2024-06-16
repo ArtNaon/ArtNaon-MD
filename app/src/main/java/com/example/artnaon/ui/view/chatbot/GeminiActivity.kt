@@ -49,6 +49,7 @@ class GeminiActivity : AppCompatActivity() {
 
     private var userProfilePicture: String? = null
     private var userName: String? = null
+    private var userEmail: String? = null // Tambahkan ini
     private val messages = mutableListOf<MessageModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,16 +66,21 @@ class GeminiActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        messages.addAll(loadMessages(this))
-        messages.forEach { message ->
-            populateChatBody(message.username, message.message, message.date, message.userProfilePicture)
-        }
-
+        // Ubah untuk memuat pesan berdasarkan email pengguna
         mainViewModel.getSession().observe(this, Observer { userModel ->
             if (userModel != null) {
                 userProfilePicture = userModel.picture
                 userName = userModel.name
+                userEmail = userModel.email
                 profileViewModel.fetchUserDetails(userModel.email)
+
+                // Load messages after getting the user email
+                userEmail?.let { email ->
+                    messages.addAll(loadMessages(this, email))
+                    messages.forEach { message ->
+                        populateChatBody(message.username, message.message, message.date, message.userProfilePicture)
+                    }
+                }
             }
         })
 
@@ -93,7 +99,9 @@ class GeminiActivity : AppCompatActivity() {
             val date = getDate()
             val message = MessageModel(userName ?: "User", string, date, userProfilePicture)
             messages.add(message)
-            saveMessages(this, messages)
+            userEmail?.let { email ->
+                saveMessages(this, email, messages)
+            }
             populateChatBody(userName ?: "User", string, date, userProfilePicture)
 
             viewModel.sendMessage(string)
@@ -104,11 +112,13 @@ class GeminiActivity : AppCompatActivity() {
             val date = getDate()
             val message = MessageModel("ArtNaon Bot", response, date, "url_to_bot_profile_picture") // Ganti dengan URL foto profil bot jika ada
             messages.add(message)
-            saveMessages(this, messages)
+            userEmail?.let { email ->
+                saveMessages(this, email, messages)
+            }
             populateChatBody("ArtNaon Bot", response, date, "url_to_bot_profile_picture")
         })
-
     }
+
     private fun setupKeyboard() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

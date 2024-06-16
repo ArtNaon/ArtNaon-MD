@@ -34,7 +34,6 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
     private lateinit var genreAdapter: GenreAdapter
     private lateinit var paintingAdapter: PaintingAdapter
 
-    // Store genres as a property of the class
     private var genres: List<Genre> = listOf()
 
     override fun onCreateView(
@@ -56,14 +55,12 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
     }
 
     private fun setupRecyclerViews() {
-        // Setup RecyclerView for genres
         genreAdapter = GenreAdapter(emptyList())
         binding.rvMainGenre.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = genreAdapter
         }
 
-        // Setup RecyclerView for art
         binding.rvMainArt.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             paintingAdapter = PaintingAdapter(emptyList(), this@HomeFragment)
@@ -81,6 +78,7 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
+                _binding?.let { showProgressIndicator() }
                 val response = apiService.getGenres()
                 genres = response.result?.filterNotNull()?.map { Genre(it) } ?: emptyList()
                 Log.d("HomeFragment", "Fetched genres: $genres")
@@ -90,8 +88,10 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Error fetching genres: ${e.message}", e)
                 if (isAdded) {
-                    Toast.makeText(requireContext(), "Failed to load genres", Toast.LENGTH_SHORT).show()
+                    Log.e("HomeFragment", "Failed to load genres: ${e.message}", e)
                 }
+            } finally {
+                _binding?.let { hideProgressIndicator() }
             }
         }
     }
@@ -102,6 +102,7 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             try {
+                _binding?.let { showProgressIndicator() }
                 val response = apiService.getHomePage()
                 val paintings = response.result ?: emptyList()
                 if (isAdded) {
@@ -110,8 +111,10 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Error fetching paintings", e)
                 if (isAdded) {
-                    Toast.makeText(requireContext(), "Failed to load paintings", Toast.LENGTH_SHORT).show()
+                    Log.e("HomeFragment", "Failed to load paintings", e)
                 }
+            } finally {
+                _binding?.let { hideProgressIndicator() }
             }
         }
     }
@@ -150,16 +153,21 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
     }
 
     private fun searchGenre(query: String) {
-        val matchingGenre = genres.find { it.name.equals(query, ignoreCase = true) }
-        if (matchingGenre != null) {
-            val intent = Intent(requireContext(), HomeGenreActivity::class.java).apply {
-                putExtra("GENRE_NAME", matchingGenre.name)
+        _binding?.let {
+            showProgressIndicator()
+            val matchingGenre = genres.find { it.name.equals(query, ignoreCase = true) }
+            if (matchingGenre != null) {
+                val intent = Intent(requireContext(), HomeGenreActivity::class.java).apply {
+                    putExtra("GENRE_NAME", matchingGenre.name)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(requireContext(), "No matching genre found", Toast.LENGTH_SHORT).show()
             }
-            startActivity(intent)
-        } else {
-            Toast.makeText(requireContext(), "No matching genre found", Toast.LENGTH_SHORT).show()
+            hideProgressIndicator()
         }
     }
+
 
     private fun setupActionBar() {
         binding.ivActionBarSearch.setOnClickListener {
@@ -172,6 +180,14 @@ class HomeFragment : Fragment(), PaintingAdapter.OnItemClickListener {
             val intent = Intent(requireContext(), UploadActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun showProgressIndicator() {
+        _binding?.pgHome?.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressIndicator() {
+        _binding?.pgHome?.visibility = View.GONE
     }
 
     override fun onResume() {

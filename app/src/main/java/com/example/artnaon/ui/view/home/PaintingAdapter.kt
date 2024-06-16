@@ -26,8 +26,8 @@ class PaintingAdapter(private var paintings: List<String?>, private val itemClic
         Log.d("PaintingAdapter", "Loading URL: $paintingUrl") // Logging URL
         Glide.with(holder.itemView.context)
             .load(paintingUrl)
-            .placeholder(R.drawable.dummy_art) // Optional placeholder
-            .error(R.drawable.ic_launcher_background) // Optional error image
+            .placeholder(R.drawable.no_image_found) // Optional placeholder
+            .error(R.drawable.no_image_found) // Optional error image
             .into(holder.imageView)
 
         holder.itemView.setOnClickListener {

@@ -8,6 +8,7 @@
     <color name="colorTextGenre">#1E1E1E</color>
     <color name="colorButtonMini">#959ABA</color>
     <color name="colorSearchBackground">#EFEFEF</color>
+    <color name="colorTosca">#56C7B3</color>
     <color name="colorGreen">#BADFDF</color>
     <color name="colorGreenOld">#189495</color>
     <color name="colorOrange">#F9DFD8</color>
@@ -18,5 +19,4 @@
     <color name="colorBlue">#A6CEDB</color>
     <color name="colorPink">#E4A4DA</color>
     <color name="colorViolet">#B69AF0</color>
-
 </resources>

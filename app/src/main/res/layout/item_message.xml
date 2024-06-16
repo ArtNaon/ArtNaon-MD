@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:padding="16dp">
 
     <LinearLayout
@@ -44,7 +45,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/sfui_regular"
         android:layout_marginTop="8dp"
-        android:text="@string/gemini_ai"
+        android:text="@string/lorem_ipsum"
         android:textSize="16sp" />
 
 </LinearLayout>

@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:layout_marginLeft="8dp"
+    android:background="@color/white"
     android:layout_marginRight="8dp">
 
     <com.google.android.material.imageview.ShapeableImageView
@@ -19,6 +20,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/RoundedCornersImageView"
-        tools:srcCompat="@drawable/dummy_art" />
+        tools:srcCompat="@drawable/no_image_found" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

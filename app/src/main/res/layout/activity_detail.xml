@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     tools:context=".ui.view.detail.DetailActivity">
 
@@ -16,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dummy_art"
+        app:srcCompat="@drawable/no_image_found"
         tools:ignore="ImageContrastCheck" />
 
     <ImageButton
@@ -51,7 +52,7 @@
             android:contentDescription="@string/image_desc"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/logo_art"/>
+            android:src="@drawable/baseline_person_off_24"/>
 
         <TextView
             android:id="@+id/tv_detail_name"
@@ -142,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sfui_light"
-                android:text="@string/romanticism"
+                android:text="@string/genre"
                 android:textColor="@color/black"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
