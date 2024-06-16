@@ -17,32 +17,38 @@
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/nav_view"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:background="@drawable/navbot"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:itemIconSize="30dp"
+        android:elevation="20dp"
+        app:cnb_animationDuration="175"
+        app:cnb_iconSize="24dp"
         app:itemIconTint="@color/black"
-        app:menu="@menu/bottom_nav_menu"
+        app:cnb_menuResource="@menu/bottom_nav_menu"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         app:labelVisibilityMode="unlabeled"
         android:paddingTop="8dp"/>
 
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="45dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/camera_bg"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_camera"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/camera"
+        app:fabCustomSize="70dp"
+        app:shapeAppearance="?attr/circleRadius"
         android:contentDescription="@string/camera_btn"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

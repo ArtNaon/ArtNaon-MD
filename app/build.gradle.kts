@@ -81,8 +81,7 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
     implementation("androidx.exifinterface:exifinterface:1.3.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
-
-
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 
 
     //api
@@ -96,6 +95,6 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation (libs.androidx.lifecycle.extensions)
 
-    //firebase auth
+
 
 }
