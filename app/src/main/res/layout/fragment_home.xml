@@ -129,7 +129,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="85dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/colorOrange"
+        app:tint="@color/black"
         android:src="@drawable/robot"
         android:contentDescription="@string/image_desc" />
 
