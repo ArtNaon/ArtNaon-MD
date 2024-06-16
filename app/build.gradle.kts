@@ -83,6 +83,9 @@ dependencies {
     implementation (libs.guava)
     implementation("androidx.exifinterface:exifinterface:1.3.6")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
+
+
 
     //api
     implementation(libs.retrofit2.retrofit)
@@ -94,6 +97,8 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation (libs.androidx.lifecycle.extensions)
+
+
 
     //gemini
     implementation(libs.generativeai)
