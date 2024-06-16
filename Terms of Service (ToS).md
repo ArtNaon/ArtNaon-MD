@@ -1,5 +1,3 @@
-# Terms and Policies for ArtNaon
-
 ## Terms of Service (ToS)
 
 ### 1. Introduction
