@@ -77,4 +77,9 @@
     <string name="or">——— ATAU ———</string>
     <string name="sign_in_with_google">Masuk Dengan Google</string>
     <string name="select_language">Pilih Bahasa</string>
+    <string name="delete">Hapus</string>
+    <string name="artnaon_bot">ArtNaon Bot</string>
+    <string name="ask_gemini">Tanya ArtNaon Bot\n</string>
+    <string name="date">Tanggal</string>
+    <string name="gemini_ai">ArtNaon AI</string>
 </resources>
