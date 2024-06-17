@@ -39,9 +39,9 @@
         android:layout_marginTop="8dp"
         android:orientation="horizontal"
         android:paddingStart="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_detail_class_art"
         tools:ignore="RtlSymmetry">
 
@@ -67,8 +67,8 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/sfui_light"
                 android:text="@string/genre"
-                android:textSize="13sp"
                 android:textColor="@color/black"
+                android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_class_genre_name" />
 
@@ -79,8 +79,8 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/sfui_semibold"
                 android:text="@string/desc"
-                android:textSize="16sp"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_class_genre" />
 
             <TextView
@@ -92,8 +92,8 @@
                 android:paddingEnd="8dp"
                 android:text="@string/lorem_ipsum"
                 android:textAlignment="textStart"
-                android:textSize="13sp"
                 android:textColor="@color/black"
+                android:textSize="13sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_detai_classl_desc_name" />
 
             <TextView
@@ -103,18 +103,18 @@
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/sfui_semibold"
                 android:text="@string/similar_genre"
-                android:textSize="16sp"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_detail_class_desc" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_detail_class_similar_genre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_detail_class_similar_genre"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                tools:listitem="@layout/item_detail_art"/>
+                app:layout_constraintTop_toBottomOf="@id/tv_detail_class_similar_genre"
+                tools:listitem="@layout/item_detail_art" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

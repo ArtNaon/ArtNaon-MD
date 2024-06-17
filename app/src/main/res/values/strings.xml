@@ -79,8 +79,10 @@
     <string name="select_language">Select Language</string>
     <string name="delete">Delete</string>
     <string name="artnaon_bot">ArtNaon Bot</string>
-    <string name="ask_gemini">Ask ArtNaon Bot\n</string>
+    <string name="ask_gemini">Ask ArtNaon Bot</string>
     <string name="date">Date</string>
     <string name="gemini_ai">Gemini AI</string>
+    <string name="genre_hint">Input Your Genre Here</string>
+    <string name="edit_profile">Edit Profile</string>
 
 </resources>

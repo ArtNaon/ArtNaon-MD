@@ -35,7 +35,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="@font/sfui_bold"
             android:text="@string/artnaon_bot"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -68,6 +69,7 @@
         android:id="@+id/gemini_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -86,6 +88,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edt_input"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/sfui_medium"
                 android:layout_height="wrap_content"
                 android:hint="@string/ask_gemini"/>
         </com.google.android.material.textfield.TextInputLayout>

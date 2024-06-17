@@ -45,12 +45,6 @@ class SignInActivity : AppCompatActivity() {
         setupAction()
     }
 
-    override fun onResume() {
-        super.onResume()
-        setupInitialViewStates()
-        playAnimation()
-    }
-
     override fun onStop() {
         super.onStop()
         binding.edtSignInEmail.text = null
@@ -192,6 +186,18 @@ class SignInActivity : AppCompatActivity() {
 
     private fun showLoading(isLoading: Boolean) {
         binding.pgSignIn.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setupInitialViewStates()
+        resetErrorMessages()
+        playAnimation()
+    }
+
+    private fun resetErrorMessages() {
+        binding.edlSignInEmail.error = null
+        binding.edlSignInPassword.error = null
     }
 
 }

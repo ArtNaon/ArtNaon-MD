@@ -109,14 +109,16 @@ class DetailActivity : AppCompatActivity(), DetailAdapter.OnItemClickListener {
                     showLoading(false)
                     if (e.code() == 400) {
                         Toast.makeText(this@DetailActivity, "Painting already liked", Toast.LENGTH_SHORT).show()
+                    } else if (e.code() == 404) {
+                        Toast.makeText(this@DetailActivity, "User not found", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("DetailActivity", "Error occurred: ${e.message()}")
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     showLoading(false)
-                    Toast.makeText(this@DetailActivity, "Error occurred: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("DetailActivity", "Error occurred: ${e.message}")
                 }
             }
         }

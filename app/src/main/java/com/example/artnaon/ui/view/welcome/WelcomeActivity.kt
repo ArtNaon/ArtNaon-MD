@@ -39,16 +39,12 @@ class WelcomeActivity : AppCompatActivity() {
     private fun playAnimation() {
         binding.btnWelcomeNewHere.alpha = 0f
         binding.tvWelcomeSignin.alpha = 0f
-        binding.tvWelcomeOr.alpha = 0f
-        binding.btnWelcomeSignInGoogle.alpha = 0f
 
         val signup = ObjectAnimator.ofFloat(binding.btnWelcomeNewHere, View.ALPHA, 1f).setDuration(800)
         val signin = ObjectAnimator.ofFloat(binding.tvWelcomeSignin, View.ALPHA, 1f).setDuration(600)
-        val or = ObjectAnimator.ofFloat(binding.tvWelcomeOr, View.ALPHA, 1f).setDuration(600)
-        val google = ObjectAnimator.ofFloat(binding.btnWelcomeSignInGoogle, View.ALPHA, 1f).setDuration(600)
 
         AnimatorSet().apply {
-            playSequentially(signup, signin, or, google)
+            playSequentially(signup, signin)
             startDelay = 200
         }.start()
     }

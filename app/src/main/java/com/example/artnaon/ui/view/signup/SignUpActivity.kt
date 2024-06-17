@@ -49,12 +49,6 @@ class SignUpActivity : AppCompatActivity() {
         setupAction()
     }
 
-    override fun onResume() {
-        super.onResume()
-        setupInitialViewStates()
-        playAnimation()
-    }
-
     override fun onStop() {
         super.onStop()
         binding.edtSignUpUsername.text = null
@@ -203,4 +197,18 @@ class SignUpActivity : AppCompatActivity() {
         alertDialog?.dismiss()
         lifecycleScope.cancel()
     }
+
+    override fun onResume() {
+        super.onResume()
+        setupInitialViewStates()
+        resetErrorMessages()
+        playAnimation()
+    }
+
+    private fun resetErrorMessages() {
+        binding.edlSignUpUsername.error = null
+        binding.edlSignUpEmail.error = null
+        binding.edlSignUpPassword.error = null
+    }
+
 }

@@ -79,7 +79,9 @@
     <string name="select_language">Pilih Bahasa</string>
     <string name="delete">Hapus</string>
     <string name="artnaon_bot">ArtNaon Bot</string>
-    <string name="ask_gemini">Tanya ArtNaon Bot\n</string>
+    <string name="ask_gemini">Tanya ArtNaon Bot</string>
     <string name="date">Tanggal</string>
     <string name="gemini_ai">ArtNaon AI</string>
+    <string name="genre_hint">Masukkan Genre Lukisanmu Di Sini</string>
+    <string name="edit_profile">Edit Profil</string>
 </resources>
