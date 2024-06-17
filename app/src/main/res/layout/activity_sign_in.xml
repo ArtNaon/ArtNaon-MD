@@ -130,7 +130,7 @@
         android:id="@+id/btn_sign_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:background="@drawable/bg_button"
         android:fontFamily="@font/sfui_semibold"
         android:text="@string/login"
@@ -138,7 +138,7 @@
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_sign_in_horizontal_sub" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_sign_in_reset_password" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_sign_in_sign_up"
@@ -155,7 +155,7 @@
             android:id="@+id/tv_sign_in_dont_have_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="113dp"
+            android:layout_marginStart="100dp"
             android:fontFamily="@font/sfui_regular"
             android:text="@string/don_t_have_an_account"
             android:textAlignment="center"
@@ -168,13 +168,13 @@
             android:id="@+id/tv_sign_in_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="113dp"
+            android:layout_marginStart="4dp"
             android:fontFamily="@font/sfui_semibold"
             android:text="@string/sign_up"
             android:textAlignment="center"
             android:textColor="@color/colorPrimary"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_sign_in_dont_have_account"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -190,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        app:layout_constraintGuide_begin="411dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_sign_in_horizontal_sub"
@@ -213,11 +213,10 @@
         android:id="@+id/tv_sign_in_reset_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/sfui_regular"
         android:text="@string/forgot_password"
         android:textColor="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_sign_in_horizontal_sub"
         app:layout_constraintEnd_toEndOf="@+id/edl_sign_in_password"
         app:layout_constraintTop_toBottomOf="@+id/edl_sign_in_password" />
 

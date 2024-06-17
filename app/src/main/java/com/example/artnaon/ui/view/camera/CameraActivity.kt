@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.OrientationEventListener
 import android.view.Surface
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -119,6 +120,8 @@ class CameraActivity : AppCompatActivity() {
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
+        binding.pgCamera.visibility = View.VISIBLE
+
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
@@ -129,6 +132,7 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onError(exc: ImageCaptureException) {
+                    binding.pgCamera.visibility = View.GONE
                     Toast.makeText(
                         this@CameraActivity,
                         "Gagal mengambil gambar.",
@@ -152,6 +156,8 @@ class CameraActivity : AppCompatActivity() {
                     call: Call<ClassifyResponse>,
                     response: Response<ClassifyResponse>
                 ) {
+                    binding.pgCamera.visibility = View.GONE
+
                     if (response.isSuccessful) {
                         val result = response.body()?.result
                         Log.d(TAG, "onResponse: Klasifikasi berhasil, hasil: $result")
@@ -172,6 +178,8 @@ class CameraActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<ClassifyResponse>, t: Throwable) {
+                    binding.pgCamera.visibility = View.GONE // Sembunyikan ProgressBar jika gagal menghubungi server
+
                     Log.e(TAG, "onFailure: Gagal menghubungi server", t)
                     Toast.makeText(
                         this@CameraActivity,

@@ -52,7 +52,7 @@ class UploadActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupListeners()
-        setupSpinner()
+        setupAutoCompleteTextView()
         observeSession()
     }
 
@@ -83,24 +83,13 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupSpinner() {
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.genre_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerUploadGenre.adapter = adapter
-        }
+    private fun setupAutoCompleteTextView() {
+        val genres = listOf("Abstract", "Expressionism", "Neoclassicism", "Primitivism", "Realism", "Romanticism", "Symbolism")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, genres)
+        binding.edtUploadGenre.setAdapter(adapter)
 
-        binding.spinnerUploadGenre.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedGenre = parent.getItemAtPosition(position) as String
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                selectedGenre = ""
-            }
+        binding.edtUploadGenre.setOnItemClickListener { parent, view, position, id ->
+            selectedGenre = parent.getItemAtPosition(position) as String
         }
     }
 
@@ -127,8 +116,8 @@ class UploadActivity : AppCompatActivity() {
         }
 
         selectedFileUri?.let { uri ->
-            val file = uriToFile(uri, this) // Convert URI to File
-            val processedFile = file.reduceFileImage() // Reduce image size
+            val file = uriToFile(uri, this)
+            val processedFile = file.reduceFileImage()
 
             val requestFile = RequestBody.create("image/*".toMediaType(), processedFile)
             val body = MultipartBody.Part.createFormData("painting", processedFile.name, requestFile)

@@ -49,7 +49,7 @@ class GeminiActivity : AppCompatActivity() {
 
     private var userProfilePicture: String? = null
     private var userName: String? = null
-    private var userEmail: String? = null // Tambahkan ini
+    private var userEmail: String? = null
     private val messages = mutableListOf<MessageModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +66,6 @@ class GeminiActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        // Ubah untuk memuat pesan berdasarkan email pengguna
         mainViewModel.getSession().observe(this, Observer { userModel ->
             if (userModel != null) {
                 userProfilePicture = userModel.picture
@@ -74,7 +73,6 @@ class GeminiActivity : AppCompatActivity() {
                 userEmail = userModel.email
                 profileViewModel.fetchUserDetails(userModel.email)
 
-                // Load messages after getting the user email
                 userEmail?.let { email ->
                     messages.addAll(loadMessages(this, email))
                     messages.forEach { message ->
@@ -153,16 +151,17 @@ class GeminiActivity : AppCompatActivity() {
         if (username == "ArtNaon Bot") {
             itemBinding.ivChatbot.setImageResource(R.drawable.logo_art)
         } else {
-            profilePicture?.let {
-                Glide.with(this).load(it).into(itemBinding.ivChatbot)
-            } ?: itemBinding.ivChatbot.setImageResource(R.color.black)
+            if (profilePicture != null && profilePicture.isNotEmpty()) {
+                Glide.with(this).load(profilePicture).into(itemBinding.ivChatbot)
+            } else {
+                itemBinding.ivChatbot.setImageResource(R.drawable.baseline_person_off_24)
+            }
         }
         binding.chatbotLayout.addView(itemBinding.root)
 
         val scrollView = binding.scrollChatbot
         scrollView.post { scrollView.fullScroll(View.FOCUS_DOWN) }
     }
-
 
     @SuppressLint("NewApi")
     private fun getDate(): String {

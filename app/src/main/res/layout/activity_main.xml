@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.view.main.MainActivity">
 
     <fragment
@@ -23,19 +23,19 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/navbot"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:itemIconSize="30dp"
         android:elevation="20dp"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
         app:cnb_animationDuration="175"
         app:cnb_iconSize="24dp"
-        app:itemIconTint="@color/black"
         app:cnb_menuResource="@menu/bottom_nav_menu"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/black"
         app:labelVisibilityMode="unlabeled"
-        android:paddingTop="8dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -43,13 +43,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="45dp"
-        app:layout_constraintStart_toStartOf="parent"
         android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/camera_btn"
         android:src="@drawable/camera"
         app:fabCustomSize="70dp"
-        app:shapeAppearance="?attr/circleRadius"
-        android:contentDescription="@string/camera_btn"
-        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:shapeAppearance="?attr/circleRadius"
+        app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>
