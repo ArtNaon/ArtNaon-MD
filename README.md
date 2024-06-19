@@ -39,10 +39,21 @@ ArtNaon offers a range of features designed to enhance the user experience and f
 ![3](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/d9b981aa-b798-4c8a-ab28-1e6db3eb99d1)
 
 ## Previews
-Watch the video here: ([ArtNaon Demo Video](https://youtu.be/Ok-KT-8Rl9Q))
-![ArtNaon Slides](https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/84a6c2fc-38ec-43f5-9674-78ab4f801b0a)
-![ArtNaon Slides (1)](https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/6758fcc1-4479-4385-bd75-1f27e01224b9)
-![15](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/e64c6763-82b8-4ba2-9ab6-bf778ab8dbb6)
+
+<p align="center">
+  <a href="https://youtu.be/Ok-KT-8Rl9Q" target="_blank">Watch the video here: ArtNaon Demo Video</a>
+</p>
+
+<p align="center">
+  <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/84a6c2fc-38ec-43f5-9674-78ab4f801b0a" alt="ArtNaon Slides">
+</p>
+<p align="center">
+  <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/6758fcc1-4479-4385-bd75-1f27e01224b9" alt="ArtNaon Slides (1)">
+</p>
+<p align="center">
+  <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/e64c6763-82b8-4ba2-9ab6-bf778ab8dbb6" alt="15">
+</p>
+
 
 ## Download ArtNaon
 Discover the world of art like never before with ArtNaon. Our app offers a unique and engaging way to learn about various art genres, famous paintings, and much more. With features like genre classification, camera integration, gallery upload, and our informative ArtNaon bot, you can explore the rich history and beauty of art anytime, anywhere.
