@@ -150,7 +150,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupLogout() {
         binding.logoutButton.setOnClickListener {
-            viewModel.logout()
+            showLogoutConfirmationDialog()
         }
 
         viewModel.logoutState.observe(viewLifecycleOwner) { isLoggedOut ->
@@ -162,6 +162,22 @@ class ProfileFragment : Fragment() {
             }
         }
     }
+
+    private fun showLogoutConfirmationDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Logout")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes") { dialog, _ ->
+                viewModel.logout()
+                dialog.dismiss()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
 
     private fun setupSwitchMode() {
         viewModel.themeSetting.observe(viewLifecycleOwner) { isDarkModeActive ->
@@ -199,10 +215,9 @@ class ProfileFragment : Fragment() {
         config.locale = locale
         requireActivity().resources.updateConfiguration(config, requireActivity().resources.displayMetrics)
 
-        // Simpan pilihan bahasa di SharedPreferences
         saveLanguageSetting(language)
 
-        // Restart activity to apply changes
+
         val intent = Intent(requireContext(), requireActivity()::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
