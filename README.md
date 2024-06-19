@@ -49,7 +49,7 @@ Watch the video here: [ArtNaon Demo Video](https://youtu.be/Ok-KT-8Rl9Q)
   <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/6758fcc1-4479-4385-bd75-1f27e01224b9" alt="ArtNaon Slides (1)">
 </p>
 <p align="center">
-  <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/e64c6763-82b8-4ba2-9ab6-bf778ab8dbb6" alt="15">
+  <img src="https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/15ffba93-4fb7-41b7-b43e-a818216fc1c8" alt="15">
 </p>
 
 
