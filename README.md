@@ -8,9 +8,18 @@
 | A117D4KY4385 | Yuzzar Alpriatna Malik| Mobile Development | Institut Teknologi Nasional Bandung | [LinkedIn](https://www.linkedin.com/in/yuzzar-malik/) |
 
 ## ArtNaon
-[**ArtNaon**](https://github.com/ArtNaon/ArtNaon-MD/blob/main/About.md#about-artnaon) is an innovative and comprehensive application developed by a team of seven students from various universities, each bringing unique expertise and passion to the project. The team is strategically divided into three parts: three members specializing in Machine Learning, two in Cloud Computing, and two in Mobile Development. This interdisciplinary collaboration ensures that ArtNaon leverages the latest technological advancements to deliver an exceptional user experience.
+[**ArtNaon**](https://github.com/ArtNaon/ArtNaon-MD/blob/main/About.md#about-artnaon) is a groundbreaking mobile application designed to bridge the gap between art enthusiasts and the complex world of art appreciation. By simplifying the identification and understanding of various art genres, ArtNaon makes it easier for users to comprehend and appreciate the true essence of artworks.
 
-### Technology
+### Technologies
+- Kotlin
+- MVVM Architecture
+- Google Material
+- Retrofit2
+- Generative AI
+- Datastore
+- CameraX
+- Glide
+- Chip Navigation Bar
 
 ### Features
 ArtNaon offers a range of features designed to enhance the user experience and facilitate independent learning:
@@ -22,7 +31,7 @@ ArtNaon offers a range of features designed to enhance the user experience and f
 - **Search Functionality:** The app includes a powerful search feature that allows users to search for specific art genres, styles, or keywords within the app.
 - **Language Support:** ArtNaon supports both Indonesian and English, making it accessible to a broader audience.
 - **Switch Mode:** The app includes flexible modes for personalized user experiences, allowing users to switch between different viewing and interaction modes.
-- **
+- **ArtNaon Bot:** ArtNaon also features a chatbot named ArtNaon bot that provides information about paintings. The bot can answer questions about various artworks, artists, and art movements. It can suggest similar artworks, recommend related reading materials, and offer insights into the history, significance, and techniques of specific paintings, enhancing the user's educational experience.
 
 ## Screenshots
 ![1](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/101628b7-9269-4bfe-9cee-f73ebfef861e)
@@ -30,9 +39,14 @@ ArtNaon offers a range of features designed to enhance the user experience and f
 ![3](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/d9b981aa-b798-4c8a-ab28-1e6db3eb99d1)
 
 ## Previews
-Watch the video here: ([ArtNaon Demo Video](https://youtu.be/Ok-KT-8Rl9Q))[]
+Watch the video here: ([ArtNaon Demo Video](https://youtu.be/Ok-KT-8Rl9Q))
 
+
+![15](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/e64c6763-82b8-4ba2-9ab6-bf778ab8dbb6)
 
 ## Download ArtNaon
+Discover the world of art like never before with ArtNaon. Our app offers a unique and engaging way to learn about various art genres, famous paintings, and much more. With features like genre classification, camera integration, gallery upload, and our informative ArtNaon bot, you can explore the rich history and beauty of art anytime, anywhere.
 
-## Terms and 
+Don't miss out on the chance to enhance your art knowledge and appreciation. [Download ArtNaon Now!](https://drive.google.com/file/d/1mTyorDub6ogjtYLFgiq8QBOHizu8a5FF/view?usp=sharing)
+
+## [Terms and Policies](https://github.com/ArtNaon/ArtNaon-MD/blob/main/Terms%20of%20Service%20(ToS).md#terms-and-policies-for-artnaon)
