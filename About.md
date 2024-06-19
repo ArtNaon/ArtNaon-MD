@@ -23,7 +23,8 @@ ArtNaon offers a range of features designed to enhance the user experience and f
 - **Search Functionality:** The app includes a powerful search feature that allows users to search for specific art genres, styles, or keywords within the app.
 - **Language Support:** ArtNaon supports both Indonesian and English, making it accessible to a broader audience.
 - **Switch Mode:** The app includes flexible modes for personalized user experiences, allowing users to switch between different viewing and interaction modes.
-
+- **ArtNaon Bot:** ArtNaon also features a chatbot named ArtNaon bot that provides information about paintings. The bot can answer questions about various artworks, artists, and art movements. It can suggest similar artworks, recommend related reading materials, and offer insights into the history, significance, and techniques of specific paintings, enhancing the user's educational experience.
+  
 ## Our Vision
 At ArtNaon, we believe that art should be accessible to everyone. Our vision is to facilitate independent learning, minimize the risk of errors in art interpretation, and increase the overall understanding and appreciation of art in the community. We aim to provide a deeper art experience that goes beyond superficial aesthetics, encouraging users to explore the emotions, feelings, and thought processes behind each artwork.
 
