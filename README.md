@@ -40,8 +40,8 @@ ArtNaon offers a range of features designed to enhance the user experience and f
 
 ## Previews
 Watch the video here: ([ArtNaon Demo Video](https://youtu.be/Ok-KT-8Rl9Q))
-
-
+![ArtNaon Slides](https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/84a6c2fc-38ec-43f5-9674-78ab4f801b0a)
+![ArtNaon Slides (1)](https://github.com/ArtNaon/ArtNaon-MD/assets/130447704/6758fcc1-4479-4385-bd75-1f27e01224b9)
 ![15](https://github.com/ArtNaon/ArtNaon-MD/assets/45267982/e64c6763-82b8-4ba2-9ab6-bf778ab8dbb6)
 
 ## Download ArtNaon
