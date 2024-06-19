@@ -1,6 +1,8 @@
 package com.example.artnaon.ui.view.main
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -17,6 +19,7 @@ import com.example.artnaon.ui.view.camera.CameraActivity
 import com.example.artnaon.ui.view.profile.ProfileViewModel
 import com.example.artnaon.ui.view.splash.SplashActivity
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,6 +37,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Apply language setting before setting content view
+        applyLanguageSetting()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -45,6 +51,8 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
         }
+        val chipNavigationBar = binding.navView
+        chipNavigationBar.elevation = 20f
     }
 
     private fun setupNavigation() {
@@ -92,5 +100,19 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finishAffinity()
+    }
+
+    private fun applyLanguageSetting() {
+        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        val language = sharedPreferences.getString("language_setting", "en") ?: "en"
+        setLocale(language)
+    }
+
+    private fun setLocale(language: String) {
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.locale = locale
+        resources.updateConfiguration(config, resources.displayMetrics)
     }
 }

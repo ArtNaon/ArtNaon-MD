@@ -21,6 +21,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.dicoding.picodiploma.loginwithanimation.helper.uriToFile
 import com.example.artnaon.data.api.ApiConfig
 import com.example.artnaon.data.response.ClassifyResponse
 import com.example.artnaon.databinding.ActivityCameraBinding
@@ -31,6 +32,7 @@ import retrofit2.Response
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -50,6 +52,7 @@ class CameraActivity : AppCompatActivity() {
         private val REQUIRED_PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA)
         const val EXTRA_CAMERAX_IMAGE = "CameraX Image"
         const val CAMERAX_RESULT = 200
+        private const val PICK_IMAGE_REQUEST = 2
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,14 +70,36 @@ class CameraActivity : AppCompatActivity() {
             )
         }
 
-        binding.switchCamera.setOnClickListener {
+        binding.SwitchCameraImage.setOnClickListener {
             cameraSelector =
                 if (cameraSelector == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA
                 else CameraSelector.DEFAULT_BACK_CAMERA
             startCamera()
         }
+
         binding.captureImage.setOnClickListener { takePhoto() }
+
+        binding.galleryImage.setOnClickListener { selectImageFromGallery() }
     }
+
+    private fun selectImageFromGallery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(Intent.createChooser(intent, "Select Painting"), PICK_IMAGE_REQUEST)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.data != null) {
+            val selectedImageUri = data.data
+            Log.d(TAG, "Selected Image URI: $selectedImageUri")
+            selectedImageUri?.let { uri ->
+                val file = uriToFile(uri, this)
+                classifyImage(file, uri)
+            }
+        }
+    }
+
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(baseContext, it) == PackageManager.PERMISSION_GRANTED
@@ -147,10 +172,11 @@ class CameraActivity : AppCompatActivity() {
     private fun classifyImage(imageFile: File, imageUri: Uri) {
         val requestFile = imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
+        val language = getSelectedLanguage().toRequestBody("text/plain".toMediaTypeOrNull())
 
         Log.d(TAG, "classifyImage: Mengirim permintaan klasifikasi gambar")
 
-        ApiConfig().getApiService().classifyImage(body)
+        ApiConfig().getApiService().classifyImage(body, language)
             .enqueue(object : Callback<ClassifyResponse> {
                 override fun onResponse(
                     call: Call<ClassifyResponse>,
@@ -189,6 +215,12 @@ class CameraActivity : AppCompatActivity() {
                 }
             })
     }
+
+    private fun getSelectedLanguage(): String {
+        val sharedPreferences = getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        return sharedPreferences.getString("language_setting", "en") ?: "en"
+    }
+
 
     private fun createCustomTempFile(context: Context): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())

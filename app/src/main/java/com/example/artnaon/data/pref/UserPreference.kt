@@ -15,6 +15,7 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "se
 class UserPreference private constructor(private val dataStore: DataStore<Preferences>) {
 
     private val THEME_KEY = booleanPreferencesKey("theme_setting")
+    private val LANGUAGE_KEY = stringPreferencesKey("language_setting")
 
     fun getThemeSetting(): Flow<Boolean> {
         return dataStore.data.map { preferences ->
@@ -34,6 +35,18 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[NAME_KEY] = model.email
             preferences[TOKEN_KEY] = model.token
             preferences[IS_LOGIN_KEY] = true
+        }
+    }
+
+    fun getLanguageSetting(): Flow<String> {
+        return dataStore.data.map { preferences ->
+            preferences[LANGUAGE_KEY] ?: "en"
+        }
+    }
+
+    suspend fun saveLanguageSetting(language: String) {
+        dataStore.edit { preferences ->
+            preferences[LANGUAGE_KEY] = language
         }
     }
 

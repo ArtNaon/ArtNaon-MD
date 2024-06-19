@@ -1,6 +1,7 @@
 package com.example.artnaon.ui.view.profile
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -107,7 +108,6 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == EDIT_PROFILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
@@ -140,8 +140,8 @@ class ProfileFragment : Fragment() {
                         .load(pictureUrl)
                         .placeholder(R.drawable.baseline_person_off_24)
                         .error(R.drawable.baseline_person_off_24)
-                        .skipMemoryCache(true)  // Menonaktifkan cache memori
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)  // Menonaktifkan cache disk
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .into(binding.profileImageView)
                 }
             }
@@ -198,10 +198,19 @@ class ProfileFragment : Fragment() {
         val config = Configuration()
         config.locale = locale
         requireActivity().resources.updateConfiguration(config, requireActivity().resources.displayMetrics)
+
+        // Simpan pilihan bahasa di SharedPreferences
+        saveLanguageSetting(language)
+
         // Restart activity to apply changes
         val intent = Intent(requireContext(), requireActivity()::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+    }
+
+    private fun saveLanguageSetting(language: String) {
+        val sharedPreferences = requireActivity().getSharedPreferences("app_preferences", Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString("language_setting", language).apply()
     }
 
     private fun showLoading(isLoading: Boolean) {

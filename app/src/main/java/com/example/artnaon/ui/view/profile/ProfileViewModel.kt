@@ -71,6 +71,8 @@ class ProfileViewModel(private val repository: UserRepository) : ViewModel() {
         }
     }
 
+
+
     suspend fun deletePainting(paintingUrl: String): ListPaintingResponse {
         return repository.deletePainting(paintingUrl)
     }
