@@ -51,7 +51,6 @@ android {
         exclude("META-INF/NOTICE.txt")
         exclude("META-INF/notice.txt")
     }
-
 }
 
 dependencies {
@@ -85,8 +84,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
     implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 
-
-
     //api
     implementation(libs.retrofit2.retrofit)
     implementation(libs.squareup.converter.gson)
@@ -97,8 +94,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.activity.ktx)
     implementation (libs.androidx.lifecycle.extensions)
-
-
 
     //gemini
     implementation(libs.generativeai)

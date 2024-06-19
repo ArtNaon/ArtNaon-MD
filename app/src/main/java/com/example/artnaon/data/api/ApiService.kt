@@ -85,8 +85,10 @@ interface ApiService {
     @Multipart
     @POST("classifyPaintings")
     fun classifyImage(
-        @Part image: MultipartBody.Part
+        @Part image: MultipartBody.Part,
+        @Part("language") language: RequestBody
     ): Call<ClassifyResponse>
+
 
     @GET("genreList")
     suspend fun getGenres(): GenreListResponse

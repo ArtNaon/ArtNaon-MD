@@ -1,0 +1,24 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Bayangan -->
+    <item
+        android:top="4dp"
+    android:bottom="0dp">
+    <shape android:shape="rectangle">
+        <solid android:color="#33000000" />
+        <corners android:radius="8dp" />
+    </shape>
+</item>
+
+    <!-- Vektor -->
+<item>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="390dp"
+    android:height="61dp"
+    android:viewportWidth="390"
+    android:viewportHeight="61">
+    <path
+        android:pathData="M0,25C0,16.72 6.72,10 15,10H77.5H106.25C106.25,10 118.42,10 138.17,10C157.92,10 173.88,37 196.08,37C218.29,37 234.63,10 251.29,10C267.96,10 273.75,10 273.75,10H302.5H375C383.28,10 390,16.72 390,25V60H0V25Z"
+        android:fillColor="@color/white"/>
+</vector>
+</item>
+    </layer-list>
